@@ -22,7 +22,8 @@ FILE STRUCTURE
     logo.webp / logo-500.webp     white wordmark, transparent background
     hero-desktop.webp             1536x1024 landscape hero, used above 520px
     hero-mobile.webp              768x1024 portrait hero, used at 520px and below
-                                  (right-half crop of the same photo)
+                                  (3:4 crop of the same photo, source x500-1268,
+                                  chosen so the racks sit right of the text)
     share-card.jpg                1200x630 Open Graph / link preview image
     apple-touch-icon.png          180px home-screen icon
     icon-512.png                  spare large icon (not referenced yet)
@@ -48,9 +49,9 @@ PRODUCTION CHECKLIST
   [x] HERO PHOTOS ARE NOT THEIR SHOP. RESOLVED - the AI-generated interiors
       have been replaced with the client-supplied photograph of the real
       shop. hero-desktop.webp is the full frame; hero-mobile.webp is a 3:4
-      crop of the right half (the racks); share-card.jpg was rebuilt from
-      the same photo at 1200x630. See "THE HERO PHOTO" below for the two
-      things still outstanding on it.
+      crop placing the racks to the right of the text; share-card.jpg was
+      rebuilt from the same photo at 1200x630. See "THE HERO PHOTO" below
+      for what is still outstanding on it.
 
   [ ] LOGO LINK. The header logo is still  href="#" . Point it at "/".
 
@@ -247,10 +248,15 @@ THE HERO PHOTO
   gradient in .hero__scrim is the fix if the client notices it.
 
   Two other things the new photo introduced:
-    - The painted "Erica Logan" wall sign sits at ~45% width, half-dimmed
-      by the scrim, and the script "Logan" under it is illegible. It lands
-      just right of the headline and reads as a smudge. Nudging
-      object-position, or cropping the desktop frame tighter, moves it.
+    - The painted "Erica Logan" wall sign is half-dimmed by the scrim and
+      the script "Logan" under it is illegible, so it reads as a smudge
+      rather than as signage. On desktop it sits at ~45% width, just right
+      of the headline. On mobile the chosen crop puts it at 23-42% width,
+      directly behind the gold rule, where the scrim is only 60-78% black.
+      This is the cost of the mobile framing: the sign sits between the
+      quiet wall and the racks, so any crop that puts empty space behind
+      the text also pulls the sign into it. Darkening the left stop of the
+      mobile scrim suppresses it.
     - The pendant lights are sliced through by the top edge at wide
       viewports, because the photo is 3:2 and the hero box is much wider
       than that. Only fixable by cropping or a taller source frame.
