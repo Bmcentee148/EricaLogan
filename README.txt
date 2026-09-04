@@ -242,10 +242,25 @@ THE HERO PHOTO
 
   Measured, it still passes: the gold italic headline averages 6.5-7.3:1
   against its backdrop at every breakpoint. But the brightest blooms
-  showing through the scrim drop to ~2.4:1 in small patches on desktop,
+  showing through the scrim drop to ~2.5:1 in small patches on desktop,
   under the 3:1 WCAG minimum for large text. It reads as mottling rather
-  than as unreadable text. Strengthening the left stop of the horizontal
-  gradient in .hero__scrim is the fix if the client notices it.
+  than as unreadable text.
+
+  DO NOT FIX THIS BY DARKENING THE SCRIM. The client asked for the scrim
+  to be pulled back from where it originally sat; the current values are
+  their call, not an oversight. The .hero h1 / .lede text-shadow was
+  strengthened instead - a tight shadow behind the letterforms only, so
+  the photo's brightness is untouched.
+
+  Know what that bought and what it did not. The shadow lifts the typical
+  case (p95 backdrop contrast 4.2 -> 4.5 on desktop, 5.5 -> 6.1 on mobile)
+  and visibly firms up the letterforms. It does NOT move the worst-case
+  hot spots: those blooms sit between the glyphs, where only the wide
+  28px layer reaches, and that layer is too diffuse to darken them -
+  measured, pushing its alpha from .35 to .70 moves the worst pixel from
+  2.53 to 2.57. So the sub-3:1 patches on desktop are still there. The
+  only things that would actually clear them are the scrim (ruled out) or
+  a differently framed desktop photo.
 
   Two other things the new photo introduced:
     - The painted "Erica Logan" wall sign is half-dimmed by the scrim and
@@ -255,8 +270,9 @@ THE HERO PHOTO
       directly behind the gold rule, where the scrim is only 60-78% black.
       This is the cost of the mobile framing: the sign sits between the
       quiet wall and the racks, so any crop that puts empty space behind
-      the text also pulls the sign into it. Darkening the left stop of the
-      mobile scrim suppresses it.
+      the text also pulls the sign into it. LEFT AS IS on purpose - it is
+      their real wall sign, and the alternatives (darker scrim, or
+      retouching the sign out of hero-mobile.webp) were both declined.
     - The pendant lights are sliced through by the top edge at wide
       viewports, because the photo is 3:2 and the hero box is much wider
       than that. Only fixable by cropping or a taller source frame.
