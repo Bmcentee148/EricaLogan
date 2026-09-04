@@ -20,8 +20,9 @@ FILE STRUCTURE
   README.txt                      this file
   img/
     logo.webp / logo-500.webp     white wordmark, transparent background
-    hero-desktop.webp             landscape hero, used above 520px
-    hero-mobile.webp              portrait hero, used at 520px and below
+    hero-desktop.webp             1536x1024 landscape hero, used above 520px
+    hero-mobile.webp              768x1024 portrait hero, used at 520px and below
+                                  (right-half crop of the same photo)
     share-card.jpg                1200x630 Open Graph / link preview image
     apple-touch-icon.png          180px home-screen icon
     icon-512.png                  spare large icon (not referenced yet)
@@ -44,12 +45,12 @@ PRODUCTION CHECKLIST
       Search for  card__price  and replace with real prices, or delete the
       six spans if they would rather not publish pricing.
 
-  [ ] HERO PHOTOS ARE NOT THEIR SHOP. img/hero-desktop.webp and
-      img/hero-mobile.webp are AI-generated interiors. They are convincing,
-      which is the problem - a customer would reasonably believe that is the
-      room they are walking into. Replace with real photography before this
-      is public. img/share-card.jpg is built from the same photo and needs
-      rebuilding at 1200x630 once you have the real one.
+  [x] HERO PHOTOS ARE NOT THEIR SHOP. RESOLVED - the AI-generated interiors
+      have been replaced with the client-supplied photograph of the real
+      shop. hero-desktop.webp is the full frame; hero-mobile.webp is a 3:4
+      crop of the right half (the racks); share-card.jpg was rebuilt from
+      the same photo at 1200x630. See "THE HERO PHOTO" below for the two
+      things still outstanding on it.
 
   [ ] LOGO LINK. The header logo is still  href="#" . Point it at "/".
 
@@ -136,8 +137,11 @@ PRODUCTION CHECKLIST
 
 --- D. IMAGERY ----------------------------------------------------------------
 
-  [ ] Hero photos - see BLOCKERS. AI-generated.
-  [ ] Share card - rebuild from the real hero once available.
+  [x] Hero photos - real shop photo, supplied by the client.
+  [x] Share card - rebuilt at 1200x630 from the real hero photo.
+  [ ] HIGHER-RESOLUTION HERO ORIGINAL. The supplied file is 1536x1024. The
+      hero is full-bleed, so anything wider than 1536 CSS px upscales, and
+      every retina screen upscales it 2x. Ask for the camera original.
   [x] Product photos - real, and good. Consistent hanger, rail, floor and the
       Erica Logan hang tags visible. A snapshot in time; swapped weekly.
   [ ] Category icons - AI-generated watercolour illustrations. Visually
@@ -166,6 +170,14 @@ PRODUCTION CHECKLIST
       walk-ins and NAP consistency.
   [ ] Ask whether their Google Business Profile is claimed and verified. For
       a walk-in shop that outranks anything on this site for local search.
+
+  [ ] SCRIM/IMAGE BREAKPOINT MISMATCH. The portrait hero swaps in at 520px
+      (the <source> media query) but the lighter mobile scrim starts at
+      900px (the @media max-width:900px block). Between 521 and 900px you
+      get the wide landscape photo under the scrim meant for the portrait
+      crop, so the headline sits on the brightest part of the wallpaper.
+      768px is the worst case. Pre-dates this photo, but the old hero was
+      dark on the left so it never showed. Align the two numbers.
 
 
 ===============================================================================
@@ -211,8 +223,37 @@ WHY IMAGES ARE IN A FOLDER, NOT BASE64
   returning visitor to re-download the whole page.
 
 PAGE WEIGHT (own assets, whole page scrolled)
-  phone ~455KB / desktop 1x ~510KB / desktop 2x ~775KB
+  phone ~470KB / desktop 1x ~575KB / desktop 2x ~840KB
   Plus ~67KB of Google Fonts. The map adds ~1.8MB only if clicked.
+  The real hero costs ~65KB more than the AI one it replaced (desktop
+  147KB -> 212KB, mobile 89KB -> 104KB) - the floral wallpaper is
+  detail-dense and does not compress as well as the old soft-focus aisle.
+  Both are written at WebP q76; dropping to q68 saves another ~40KB if
+  the budget gets tight.
+
+
+THE HERO PHOTO
+  The scrim was tuned against the ORIGINAL hero, which had a dark, empty
+  aisle running down the left side - a naturally quiet bed for the
+  headline. The real photo does not have that. Its left half is bright,
+  high-contrast floral wallpaper plus a white fridge and white cabinets,
+  directly behind the text.
+
+  Measured, it still passes: the gold italic headline averages 6.5-7.3:1
+  against its backdrop at every breakpoint. But the brightest blooms
+  showing through the scrim drop to ~2.4:1 in small patches on desktop,
+  under the 3:1 WCAG minimum for large text. It reads as mottling rather
+  than as unreadable text. Strengthening the left stop of the horizontal
+  gradient in .hero__scrim is the fix if the client notices it.
+
+  Two other things the new photo introduced:
+    - The painted "Erica Logan" wall sign sits at ~45% width, half-dimmed
+      by the scrim, and the script "Logan" under it is illegible. It lands
+      just right of the headline and reads as a smudge. Nudging
+      object-position, or cropping the desktop frame tighter, moves it.
+    - The pendant lights are sliced through by the top edge at wide
+      viewports, because the photo is 3:2 and the hero box is much wider
+      than that. Only fixable by cropping or a taller source frame.
 
 
 ===============================================================================
