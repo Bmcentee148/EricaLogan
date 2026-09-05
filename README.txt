@@ -4,8 +4,8 @@ Marketing site - SPEC BUILD
 
 WHAT THIS IS
   A pitch/spec build, not a finished site. Sections built so far:
-      Hero -> New Arrivals -> What We Carry -> Visit Us -> Follow Along
-      -> Footer
+      Hero -> New Arrivals -> What We Carry -> About -> Visit Us
+      -> Follow Along -> Footer
   Some copy, all prices, and both hero photos are placeholders. The
   PRODUCTION CHECKLIST below lists everything that has to change before this
   can go live for a paying client.
@@ -37,10 +37,23 @@ PRODUCTION CHECKLIST
 
 --- A. BLOCKERS -- wrong or broken if shipped as-is ---------------------------
 
-  [ ] DOMAIN. Find/replace  https://REPLACE-WITH-DOMAIN.com  with the real
-      URL. 7 occurrences: canonical, og:url, og:image, twitter:image, and
-      twice inside the JSON-LD. A canonical pointing at a domain that does
-      not exist will keep the whole site out of search results. Do this first.
+  [ ] DOMAIN. There is no longer a placeholder domain anywhere - it was
+      causing real harm and has been removed. canonical and og:url are now
+      ABSENT, and og:image / twitter:image / the JSON-LD image are RELATIVE
+      paths, so they resolve correctly wherever the site is hosted.
+      Nothing is broken as-is.
+
+      At launch, once the real domain is known, improve it by adding:
+        <link rel="canonical" href="https://REALDOMAIN.com/">
+        <meta property="og:url" content="https://REALDOMAIN.com/">
+      and switching og:image / twitter:image to absolute URLs. The exact
+      lines are in a comment at the top of index.html.
+
+      WHY IT WAS REMOVED: og:url tells Facebook, iMessage and Slack where a
+      shared link should point. With a placeholder in it, every share sent
+      people to a domain that did not exist. A wrong absolute URL is far
+      worse than a missing one - scrapers and Google both fall back to the
+      URL they actually fetched, which is correct by definition.
 
   [ ] PRICES ARE INVENTED. All six were made up to fill the layout ($52-$88).
       Search for  card__price  and replace with real prices, or delete the
@@ -52,6 +65,12 @@ PRODUCTION CHECKLIST
       crop placing the racks to the right of the text; share-card.jpg was
       rebuilt from the same photo at 1200x630. See "THE HERO PHOTO" below
       for what is still outstanding on it.
+
+      NOTE: a different hero photo (the bright interior supplied 15 Aug,
+      1774x887, light plank floor and cream walls) was briefly on main and
+      has been deliberately superseded by this one. They are two different
+      rooms, not two crops of one - if there is any doubt about which is
+      the Islip shop, settle that before launch.
 
   [ ] LOGO LINK. The header logo is still  href="#" . Point it at "/".
 
@@ -82,13 +101,9 @@ PRODUCTION CHECKLIST
   [ ] PHONE. (631) 406-7846 comes from their Facebook page - the same page
       that still lists the OLD Hauppauge address. Confirm it reaches Islip.
 
-  [ ] OWNER NAMES. An AI search summary named "Tracy Mankowski" with
-      daughters "Sidney" and "Andrea". NOT independently verified. The only
-      corroboration is the contact email Sidney@ericaloganclths.com on their
-      Facebook. Get spellings directly from them - Brian first heard
-      "Tracey", the summary said "Tracy". Publish none of these names until
-      confirmed. ("Erica Logan" appears to be a brand name, not a person -
-      worth asking where it came from. Usually a good line for About.)
+  [x] OWNER NAMES - CONFIRMED by the owners: Tracy, with daughters Sidney
+      and Andrea. Used in the About section. "Erica Logan" is a brand name
+      drawn from names meaningful to the family, not a person.
 
   [ ] CATEGORIES. The six in What We Carry are assumptions. Tops, Sweaters,
       Denim and Bottoms are safe - they are literally in the product photos.
@@ -140,25 +155,31 @@ PRODUCTION CHECKLIST
 
   [x] Hero photos - real shop photo, supplied by the client.
   [x] Share card - rebuilt at 1200x630 from the real hero photo.
+  [ ] SHARE CARD IS A PLAIN PHOTO CROP. The version briefly on main carried
+      a dark left panel behind the white wordmark. This one does not - it
+      is just the photo. If the wordmark treatment is wanted, it has to be
+      rebuilt against this image.
   [ ] HIGHER-RESOLUTION HERO ORIGINAL. The supplied file is 1536x1024. The
       hero is full-bleed, so anything wider than 1536 CSS px upscales, and
       every retina screen upscales it 2x. Ask for the camera original.
+      (The superseded 15 Aug photo was 1774x887, so a wider original of
+      THIS room may well exist too - worth asking.)
   [x] Product photos - real, and good. Consistent hanger, rail, floor and the
       Erica Logan hang tags visible. A snapshot in time; swapped weekly.
   [ ] Category icons - AI-generated watercolour illustrations. Visually
       consistent with the palette, but confirm the client is comfortable
       using AI artwork and check whatever licence applies.
-  [ ] A photo of the owners on the shop floor. Still the highest-value asset
-      missing - About cannot be built well without it.
-  [ ] The storefront photo supplied is the OLD Hauppauge shop (door reads
-      926, balloons = grand opening). Do not use it on Visit Us. It would
-      work in About, telling the Hauppauge-to-Islip story.
+  [x] Photo of the owners - supplied and in use in About. Cropped at 74% of
+      the original height to drop the foreground merchandise while keeping
+      the signage and all three faces. Served at 560/900/1200.
+  [ ] The other storefront photo supplied is the OLD Hauppauge shop (door
+      reads 926, balloons = grand opening). Not used anywhere. Now that the
+      About copy mentions the Hauppauge-to-Islip move it could earn a place
+      there, but only if clearly framed as the original location.
 
 
 --- E. NOT BUILT YET ----------------------------------------------------------
 
-  [ ] ABOUT section. #about is linked twice in the nav and goes nowhere.
-      Blocked on owner names, their story, and a photo of them.
   [ ] 404 page.
   [ ] robots.txt and sitemap.xml.
   [ ] Analytics. Nothing is installed.
@@ -202,6 +223,20 @@ THE MAP IS CLICK-TO-LOAD - LEAVE IT THAT WAY
   iframe when someone presses "Show map". Making it eager takes the page from
   ~545KB to ~2.3MB and hurts Core Web Vitals, which IS a ranking factor.
   The embed itself is not.
+
+THE HERO IS LIGHT TYPE ON A DARK SCRIM
+  Headline white, italic in --gold-lt (#CFA470, the dark-background gold),
+  over a dark left-to-right scrim. The photo is a mid-tone interior (mean
+  luminance ~144), so it needs a fairly strong scrim to carry white type -
+  the scrim runs .74 at the left edge falling to 0 by 96%. That is 80% of
+  the strength white type would normally want - deliberately pulled back so
+  the shop still reads bright, which is what the client asked for. Measured
+  contrast sits at 7.9:1 or better everywhere, well clear of AA. Below about
+  60% strength the mobile headline starts failing, so that is the floor.
+  If a much brighter photo is ever swapped in, this has to flip to ink type
+  on a LIGHT veil, with the italic in --gold-ink (#7A5E30). Both golds exist
+  in the token list for exactly that reason: --gold-lt for dark backgrounds,
+  --gold-ink for light ones.
 
 THE FOOTER DELIBERATELY DOES NOT REPEAT THE HOURS
   Address, phone and Instagram are duplicated there, but hours are not -
@@ -281,6 +316,8 @@ THE HERO PHOTO
 ===============================================================================
 SOURCES FOR ANYTHING FACTUAL ON THE PAGE
 ===============================================================================
+  About section copy + names            supplied directly by the owners
+  Hauppauge May 2022 -> Islip move      supplied directly by the owners
   Hours, "mother & daughters owned"  their Instagram bio, @ericaloganclothing
   Islip address                      business listing + Google geocode
   Phone                              their Facebook page (old address on it)

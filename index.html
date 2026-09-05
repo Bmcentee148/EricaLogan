@@ -8,20 +8,25 @@
 <meta name="theme-color" content="#080908">
 
 <!-- ============================================================
-     SET THE DOMAIN BEFORE LAUNCH
-     Find and replace  https://REPLACE-WITH-DOMAIN.com  with the real
-     site URL. It appears in: canonical, og:url, og:image, twitter:image
-     and the JSON-LD "url" + "image". A canonical pointing at a domain
-     that doesn't exist will keep the site out of search results.
+     CANONICAL AND og:url ARE DELIBERATELY ABSENT.
+     They must be absolute URLs, and a wrong one is actively harmful:
+     og:url tells Facebook/iMessage/Slack where the share should point,
+     and a canonical aimed at a domain that does not exist will keep the
+     site out of Google. With both omitted, every scraper falls back to
+     the URL it actually fetched, which is correct by definition.
+
+     AT LAUNCH, once the real domain is known, add these two lines and
+     switch the two image tags below to absolute URLs:
+
+     <link rel="canonical" href="https://REALDOMAIN.com/">
+     <meta property="og:url" content="https://REALDOMAIN.com/">
      ============================================================ -->
-<link rel="canonical" href="https://REPLACE-WITH-DOMAIN.com/">
 
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Erica Logan Clothing Boutique">
 <meta property="og:title" content="Erica Logan Clothing Boutique | Women's Fashion in Islip, New York">
 <meta property="og:description" content="The little boutique everyone tells their friends about. Curated women's clothing on Main Street in Islip. New arrivals every week.">
-<meta property="og:url" content="https://REPLACE-WITH-DOMAIN.com/">
-<meta property="og:image" content="https://REPLACE-WITH-DOMAIN.com/img/share-card.jpg">
+<meta property="og:image" content="img/share-card.jpg">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta property="og:image:alt" content="Inside Erica Logan Clothing Boutique in Islip, New York.">
@@ -30,7 +35,7 @@
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Erica Logan Clothing Boutique | Islip, New York">
 <meta name="twitter:description" content="The little boutique everyone tells their friends about. Curated women's clothing on Main Street in Islip.">
-<meta name="twitter:image" content="https://REPLACE-WITH-DOMAIN.com/img/share-card.jpg">
+<meta name="twitter:image" content="img/share-card.jpg">
 
 <link rel="icon" href="favicon.ico" sizes="32x32">
 <link rel="apple-touch-icon" href="img/apple-touch-icon.png">
@@ -179,15 +184,14 @@ svg{display:block;flex:none}
 .hero__scrim{
   position:absolute;inset:0;z-index:-1;
   background:
-    linear-gradient(180deg,rgba(8,7,6,.35) 0%,rgba(8,7,6,0) 22%,rgba(8,7,6,0) 74%,rgba(8,7,6,.42) 100%),
+    linear-gradient(180deg,rgba(8,7,6,0.27) 0%,rgba(8,7,6,0) 24%,rgba(8,7,6,0) 66%,rgba(8,7,6,0.32) 100%),
     linear-gradient(90deg,
-      rgba(8,7,6,.93) 0%,
-      rgba(8,7,6,.89) 17%,
-      rgba(8,7,6,.74) 31%,
-      rgba(8,7,6,.46) 44%,
-      rgba(8,7,6,.20) 57%,
-      rgba(8,7,6,.05) 71%,
-      rgba(8,7,6,0) 84%);
+      rgba(8,7,6,0.744) 0%,
+      rgba(8,7,6,0.704) 25%,
+      rgba(8,7,6,0.528) 46%,
+      rgba(8,7,6,0.256) 66%,
+      rgba(8,7,6,0.048) 86%,
+      rgba(8,7,6,0.000) 96%);
 }
 .hero__in{
   width:100%;max-width:1600px;margin-inline:auto;
@@ -308,7 +312,20 @@ body[data-lock="true"]{overflow:hidden}
 .arrivals__foot{margin-top:clamp(40px,4.6vw,62px);text-align:center}
 .btn--dark{color:var(--ink-deep);border-color:rgba(30,27,24,.45)}
 .btn--dark:hover{background:var(--ink-deep);color:var(--paper);border-color:var(--ink-deep)}
-.arrivals__note{margin:18px 0 0;font-size:13.5px;color:var(--ink-soft)}
+/* lead-in sits above the CTA now. The gold italic on the second sentence is
+   the same roman-then-italic pattern the hero headline uses, in --gold-ink
+   because this section is on a light background. */
+.arrivals__note{
+  margin:0 0 24px;
+  font-size:clamp(15px,1.15vw,17px);line-height:1.6;color:var(--ink-soft);
+}
+.arrivals__note em{
+  font-family:var(--display);font-style:italic;
+  font-size:1.14em;color:var(--gold-ink);
+}
+/* .btn is already inline-flex + centred; this only adds the icon gap */
+.btn--ig{gap:10px}
+.btn--ig svg{flex:none}
 
 @media (prefers-reduced-motion:no-preference){
   [data-rv]{opacity:0;transform:translateY(20px);transition:opacity .75s ease,transform .75s ease}
@@ -319,6 +336,32 @@ body[data-lock="true"]{overflow:hidden}
   .stagger > [data-rv]:nth-child(5){transition-delay:.32s}
   .stagger > [data-rv]:nth-child(6){transition-delay:.40s}
   .stagger > [data-rv]:nth-child(7){transition-delay:.48s}
+
+  /* Instagram icon gives a small shake once the CTA scrolls into view.
+     Keyed off the existing [data-rv="in"] state the observer already sets,
+     so it needs no extra JS and fires exactly once - the observer
+     unobserves after first intersection. Sits inside the no-preference
+     query on purpose: the reduced-motion path sets data-rv="in" too, and
+     without this wrapper the shake would still run there. */
+  .arrivals__foot[data-rv="in"] .btn--ig svg{
+    animation:ig-jingle 1500ms ease-in-out 700ms 1 both;
+    transform-origin:50% 45%;
+  }
+}
+
+@keyframes ig-jingle{
+  0%,14%   {transform:rotate(0deg)   scale(1)}
+  19%      {transform:rotate(-13deg) scale(1.08)}
+  25%      {transform:rotate(10deg)  scale(1.08)}
+  31%      {transform:rotate(-8deg)  scale(1.05)}
+  37%      {transform:rotate(6deg)   scale(1.04)}
+  43%      {transform:rotate(-3deg)  scale(1.02)}
+  49%,62%  {transform:rotate(0deg)   scale(1)}
+  67%      {transform:rotate(-9deg)  scale(1.06)}
+  73%      {transform:rotate(7deg)   scale(1.05)}
+  79%      {transform:rotate(-4deg)  scale(1.03)}
+  85%      {transform:rotate(2deg)   scale(1.01)}
+  91%,100% {transform:rotate(0deg)   scale(1)}
 }
 
 
@@ -468,9 +511,28 @@ body[data-lock="true"]{overflow:hidden}
 .follow__handle svg{color:var(--gold-lt);flex:none;transition:transform .3s ease}
 .follow a.follow__handle:hover{color:var(--gold-lt)}
 .follow a.follow__handle:hover svg{transform:rotate(-6deg) scale(1.06)}
+/* Mirrors the New Arrivals CTA: sans lead-in, then the stat in gold italic.
+   --gold-lt here (not --gold-ink) because this band is on the dark ground. */
+/* Same lead-in + gold-italic-emphasis pattern as the New Arrivals CTA,
+   inverted for the dark band: --gold-lt here, --gold-ink there. */
 .follow__sub{
-  margin:16px 0 0;font-family:var(--display);font-style:italic;
-  font-size:clamp(16px,1.35vw,21px);color:var(--gold-lt);
+  margin:18px auto 0;max-width:52ch;
+  font-family:var(--body);font-style:normal;
+  font-size:clamp(15px,1.15vw,17px);line-height:1.65;
+  color:rgba(244,241,236,.72);
+}
+.follow__sub em{
+  display:inline-block;margin-top:6px;
+  font-family:var(--display);font-style:italic;
+  font-size:1.16em;color:var(--gold-lt);
+  /* stops "in." orphaning onto its own line on narrow screens; degrades
+     to normal wrapping where unsupported */
+  text-wrap:balance;
+}
+.follow__sub em{
+  display:inline-block;margin-top:8px;
+  font-family:var(--display);font-style:italic;
+  font-size:1.25em;line-height:1.4;color:var(--gold-lt);
 }
 .follow__cta{margin-top:clamp(24px,2.6vw,34px)}
 
@@ -505,6 +567,76 @@ body[data-lock="true"]{overflow:hidden}
 .foot__bar p{margin:0}
 .foot__bar a{color:rgba(228,225,220,.45)}
 
+
+/* ============ ABOUT ============ */
+/* --cream (not --paper) on purpose: Visit Us below already uses --paper,
+   so About needed its own existing token rather than a bare hex, both to
+   stay on-system and to keep two adjacent light sections from reading as
+   one flat block. */
+.about{background:var(--cream);color:var(--ink-deep);border-bottom:1px solid rgba(30,27,24,.08)}
+.about__in{max-width:1600px;margin-inline:auto;padding:clamp(58px,7vw,106px) var(--gut)}
+.about__grid{
+  display:grid;
+  grid-template-columns:1fr 1.05fr;
+  grid-template-areas:"text media" "quote media";
+  gap:clamp(30px,3.2vw,42px) clamp(34px,4.4vw,72px);
+  align-items:start;
+}
+.about__text{grid-area:text}
+
+.about__eyebrow{
+  margin:0 0 14px;font-size:12px;font-weight:700;
+  letter-spacing:.16em;text-transform:uppercase;color:var(--gold-ink);
+}
+.about h2{
+  margin:0;
+  font-family:var(--display);font-weight:400;
+  font-size:clamp(28px,3.1vw,44px);line-height:1.14;letter-spacing:0;
+  color:var(--ink-deep);
+}
+.about__rule{display:block;width:88px;height:2px;background:var(--gold);margin:26px 0 30px}
+.about__body p{
+  margin:0;max-width:60ch;
+  font-size:clamp(15.5px,1.15vw,17.5px);line-height:1.75;color:#4A4540;
+}
+.about__body p + p{margin-top:clamp(18px,1.6vw,24px)}
+
+.about__media{grid-area:media;margin:0}
+.about__media img{width:100%;height:auto;display:block;background:#EDE9E4}
+.about__caption{
+  margin:12px 0 0;font-size:12.5px;font-weight:600;
+  letter-spacing:.1em;text-transform:uppercase;color:var(--ink-soft);
+}
+
+/* Pull quote: same italic-gold treatment as before, moved into the copy
+   column on desktop via grid-area (mobile keeps it after the photo - see
+   the 900px query). The oversized quotation mark reuses --gold, the same
+   accent colour as .about__rule and .rule elsewhere, so it's a variation
+   on an existing motif rather than a new decorative element. */
+.about__quote{
+  grid-area:quote;
+  position:relative;
+  margin:clamp(6px,1vw,10px) 0 0;max-width:56ch;
+  padding:6px 0 0 26px;
+  border-left:3px solid var(--gold);
+}
+.about__quote::before{
+  content:"\201C";
+  position:absolute;left:9px;top:-34px;
+  font-family:var(--display);font-style:normal;
+  font-size:74px;line-height:1;color:var(--gold);opacity:.4;
+  pointer-events:none;
+}
+.about__quote p{
+  margin:0;font-family:var(--display);font-style:italic;font-weight:400;
+  font-size:clamp(18px,1.75vw,25px);line-height:1.5;color:var(--gold-ink);
+}
+.about__close{
+  margin:clamp(38px,4.2vw,54px) auto 0;max-width:64ch;text-align:center;
+  font-size:clamp(15px,1.1vw,17px);line-height:1.7;color:#4A4540;
+}
+.about__close strong{font-weight:700;color:var(--ink-deep)}
+
 /* ============ RESPONSIVE ============ */
 @media (max-width:1320px){
   .nav > ul{gap:24px}
@@ -536,14 +668,13 @@ body[data-lock="true"]{overflow:hidden}
   .hero{min-height:clamp(500px,66svh,640px)}
   .hero__scrim{
     background:
-      linear-gradient(180deg,rgba(8,7,6,.30) 0%,rgba(8,7,6,.04) 26%,rgba(8,7,6,.04) 60%,rgba(8,7,6,.46) 100%),
+      linear-gradient(180deg,rgba(8,7,6,0.32) 0%,rgba(8,7,6,0.05) 24%,rgba(8,7,6,0.05) 62%,rgba(8,7,6,0.40) 100%),
       linear-gradient(90deg,
-        rgba(8,7,6,.87) 0%,
-        rgba(8,7,6,.78) 26%,
-        rgba(8,7,6,.55) 52%,
-        rgba(8,7,6,.26) 70%,
-        rgba(8,7,6,.06) 85%,
-        rgba(8,7,6,0) 95%);
+        rgba(8,7,6,0.744) 0%,
+        rgba(8,7,6,0.704) 28%,
+        rgba(8,7,6,0.576) 52%,
+        rgba(8,7,6,0.368) 74%,
+        rgba(8,7,6,0.144) 100%);
   }
   .hero__in{padding:40px var(--gut)}
   .eyebrow{font-size:clamp(15px,4.3vw,19px);letter-spacing:.3em}
@@ -568,6 +699,12 @@ body[data-lock="true"]{overflow:hidden}
 }
 
 @media (max-width:900px){
+  .about__grid{
+    grid-template-columns:1fr;
+    grid-template-areas:"text" "media" "quote";
+    gap:30px;
+  }
+  .about__quote{max-width:none;margin-top:4px}
   .foot__in{grid-template-columns:1fr 1fr;gap:34px}
   .foot__brand{grid-column:1 / -1}
   .visit__grid{grid-template-columns:1fr;gap:34px}
@@ -624,8 +761,7 @@ section[id]{scroll-margin-top:24px}
   "name": "Erica Logan Clothing Boutique",
   "alternateName": "Erica Logan Clothing, LLC",
   "description": "Mother and daughters owned women's clothing boutique on Main Street in Islip, New York. Curated clothing, shoes and accessories, with new arrivals every week.",
-  "url": "https://REPLACE-WITH-DOMAIN.com/",
-  "image": "https://REPLACE-WITH-DOMAIN.com/img/share-card.jpg",
+  "image": "img/share-card.jpg",
   "telephone": "+1-631-406-7846",
   "address": {
     "@type": "PostalAddress",
@@ -761,7 +897,7 @@ section[id]{scroll-margin-top:24px}
         <article class="card" data-rv>
           <figure>
             <div class="card__img">
-              <img src="img/products/cable-knit-sweater-700.webp"
+              <img src="img/products/cable-knit-sweater-520.webp"
                    srcset="img/products/cable-knit-sweater-400.webp 400w, img/products/cable-knit-sweater-520.webp 520w, img/products/cable-knit-sweater-820.webp 820w"
                    sizes="(max-width:600px) 45vw, (max-width:1600px) 28.5vw, 456px"
                    width="1000" height="1503" loading="lazy" decoding="async"
@@ -776,7 +912,7 @@ section[id]{scroll-margin-top:24px}
         <article class="card" data-rv>
           <figure>
             <div class="card__img">
-              <img src="img/products/denim-jacket-700.webp"
+              <img src="img/products/denim-jacket-520.webp"
                    srcset="img/products/denim-jacket-400.webp 400w, img/products/denim-jacket-520.webp 520w, img/products/denim-jacket-820.webp 820w"
                    sizes="(max-width:600px) 45vw, (max-width:1600px) 28.5vw, 456px"
                    width="1000" height="1503" loading="lazy" decoding="async"
@@ -791,7 +927,7 @@ section[id]{scroll-margin-top:24px}
         <article class="card" data-rv>
           <figure>
             <div class="card__img">
-              <img src="img/products/embroidered-blouse-700.webp"
+              <img src="img/products/embroidered-blouse-520.webp"
                    srcset="img/products/embroidered-blouse-400.webp 400w, img/products/embroidered-blouse-520.webp 520w, img/products/embroidered-blouse-820.webp 820w"
                    sizes="(max-width:600px) 45vw, (max-width:1600px) 28.5vw, 456px"
                    width="1000" height="1503" loading="lazy" decoding="async"
@@ -806,7 +942,7 @@ section[id]{scroll-margin-top:24px}
         <article class="card" data-rv>
           <figure>
             <div class="card__img">
-              <img src="img/products/washed-pullover-700.webp"
+              <img src="img/products/washed-pullover-520.webp"
                    srcset="img/products/washed-pullover-400.webp 400w, img/products/washed-pullover-520.webp 520w, img/products/washed-pullover-820.webp 820w"
                    sizes="(max-width:600px) 45vw, (max-width:1600px) 28.5vw, 456px"
                    width="1000" height="1503" loading="lazy" decoding="async"
@@ -821,7 +957,7 @@ section[id]{scroll-margin-top:24px}
         <article class="card" data-rv>
           <figure>
             <div class="card__img">
-              <img src="img/products/linen-wide-leg-pants-700.webp"
+              <img src="img/products/linen-wide-leg-pants-520.webp"
                    srcset="img/products/linen-wide-leg-pants-400.webp 400w, img/products/linen-wide-leg-pants-520.webp 520w, img/products/linen-wide-leg-pants-820.webp 820w"
                    sizes="(max-width:600px) 45vw, (max-width:1600px) 28.5vw, 456px"
                    width="1000" height="1503" loading="lazy" decoding="async"
@@ -836,7 +972,7 @@ section[id]{scroll-margin-top:24px}
         <article class="card" data-rv>
           <figure>
             <div class="card__img">
-              <img src="img/products/sage-cardigan-700.webp"
+              <img src="img/products/sage-cardigan-520.webp"
                    srcset="img/products/sage-cardigan-400.webp 400w, img/products/sage-cardigan-520.webp 520w, img/products/sage-cardigan-820.webp 820w"
                    sizes="(max-width:600px) 45vw, (max-width:1600px) 28.5vw, 456px"
                    width="1000" height="1503" loading="lazy" decoding="async"
@@ -851,8 +987,11 @@ section[id]{scroll-margin-top:24px}
       </div>
 
       <div class="arrivals__foot" data-rv>
-        <a class="btn btn--dark" href="#visit">Visit our boutique</a>
-        <p class="arrivals__note">New pieces land on the racks every week.</p>
+        <p class="arrivals__note">See what landed this week. <em>5,000+ following along.</em></p>
+        <a class="btn btn--gold btn--ig" href="https://www.instagram.com/ericaloganclothing/" target="_blank" rel="noopener">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1.1" fill="currentColor" stroke="none"/></svg>
+          @ericaloganclothing
+        </a>
       </div>
     </div>
   </section>
@@ -908,6 +1047,39 @@ section[id]{scroll-margin-top:24px}
        ADDRESS from a business listing. PHONE is from their Facebook page, which
        still shows the OLD Hauppauge address - confirm the number still reaches
        the Islip shop. ZIP deliberately omitted; add once confirmed. -->
+  <!-- Story, names and dates supplied by the owners. -->
+  <section class="about" id="about">
+    <div class="about__in">
+      <div class="about__grid">
+        <div class="about__text" data-rv>
+          <p class="about__eyebrow">About Erica Logan</p>
+          <h2>More Than a Boutique.<br>A Family Dream.</h2>
+          <span class="about__rule" aria-hidden="true"></span>
+          <div class="about__body">
+            <p>Erica Logan Clothing began with a lifelong dream: to create a place where women of every age could find clothes they love, feel confident in what they&rsquo;re wearing, and genuinely enjoy the experience of shopping.</p>
+            <p>For Tracy, that dream became even more special when she got to build it alongside her daughters, Sidney and Andrea. Even the name Erica Logan is part of the family story, inspired by names that are meaningful to them.</p>
+            <p>Originally from Long Island&rsquo;s North Shore, the family opened Erica Logan in Hauppauge in May 2022 before making the move to Main Street in Islip &mdash; drawn to the close-knit community and small-town feel they wanted their boutique to be part of.</p>
+          </div>
+        </div>
+
+        <blockquote class="about__quote" data-rv>
+          <p>Today, Erica Logan is about much more than what&rsquo;s on the racks. It&rsquo;s about getting to know the women who walk through the door, helping them find pieces that make them feel their best, and creating the kind of warm, familiar atmosphere where customers become friends.</p>
+        </blockquote>
+
+        <figure class="about__media" data-rv>
+          <img src="img/about-family-900.webp"
+               srcset="img/about-family-560.webp 560w, img/about-family-900.webp 900w, img/about-family-1200.webp 1200w"
+               sizes="(max-width:900px) 92vw, 44vw"
+               width="1179" height="1538" loading="lazy" decoding="async"
+               alt="Tracy with her daughters Sidney and Andrea outside Erica Logan Clothing Boutique.">
+          <figcaption class="about__caption">Tracy, Sidney &amp; Andrea</figcaption>
+        </figure>
+      </div>
+
+      <p class="about__close" data-rv>Whether you&rsquo;re dressing for an ordinary Tuesday, the office, a night out or your next vacation, the goal is simple: <strong>help you leave feeling a little more confident</strong> than when you walked in.</p>
+    </div>
+  </section>
+
   <section class="visit" id="visit">
     <div class="visit__in">
       <div class="sec-head" data-rv>
@@ -996,7 +1168,7 @@ section[id]{scroll-margin-top:24px}
         <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="2" width="20" height="20" rx="5.5"/><circle cx="12" cy="12" r="4.2"/><circle cx="17.6" cy="6.4" r="1.2" fill="currentColor" stroke="none"/></svg>
         @ericaloganclothing
       </a>
-      <p class="follow__sub">See the shop between visits.</p>
+      <p class="follow__sub">New arrivals go up on Instagram before they hit the racks.<br><em>5,000+ locals already know what&rsquo;s coming in.</em></p>
       <p class="follow__cta">
         <a class="btn btn--ghost" href="https://www.instagram.com/ericaloganclothing/" target="_blank" rel="noopener">Follow on Instagram</a>
       </p>
