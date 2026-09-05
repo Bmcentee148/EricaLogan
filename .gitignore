@@ -1,0 +1,10 @@
+# macOS Finder metadata - gets created in every folder you open,
+# and Netlify will happily deploy it if it is tracked.
+.DS_Store
+._*
+.Spotlight-V100
+.Trashes
+
+# Windows
+Thumbs.db
+desktop.ini
