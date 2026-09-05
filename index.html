@@ -7,26 +7,14 @@
 <meta name="description" content="Curated pieces, timeless trends, and everyday favorites at Erica Logan Clothing Boutique in Islip, New York. New arrivals dropping weekly.">
 <meta name="theme-color" content="#080908">
 
-<!-- ============================================================
-     CANONICAL AND og:url ARE DELIBERATELY ABSENT.
-     They must be absolute URLs, and a wrong one is actively harmful:
-     og:url tells Facebook/iMessage/Slack where the share should point,
-     and a canonical aimed at a domain that does not exist will keep the
-     site out of Google. With both omitted, every scraper falls back to
-     the URL it actually fetched, which is correct by definition.
-
-     AT LAUNCH, once the real domain is known, add these two lines and
-     switch the two image tags below to absolute URLs:
-
-     <link rel="canonical" href="https://REALDOMAIN.com/">
-     <meta property="og:url" content="https://REALDOMAIN.com/">
-     ============================================================ -->
+<link rel="canonical" href="https://ericaloganclths.com/">
+<meta property="og:url" content="https://ericaloganclths.com/">
 
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Erica Logan Clothing Boutique">
 <meta property="og:title" content="Erica Logan Clothing Boutique | Women's Fashion in Islip, New York">
 <meta property="og:description" content="The little boutique everyone tells their friends about. Curated women's clothing on Main Street in Islip. New arrivals every week.">
-<meta property="og:image" content="img/share-card.jpg">
+<meta property="og:image" content="https://ericaloganclths.com/img/share-card.jpg">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta property="og:image:alt" content="Inside Erica Logan Clothing Boutique in Islip, New York.">
@@ -35,7 +23,7 @@
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Erica Logan Clothing Boutique | Islip, New York">
 <meta name="twitter:description" content="The little boutique everyone tells their friends about. Curated women's clothing on Main Street in Islip.">
-<meta name="twitter:image" content="img/share-card.jpg">
+<meta name="twitter:image" content="https://ericaloganclths.com/img/share-card.jpg">
 
 <link rel="icon" href="favicon.ico" sizes="32x32">
 <link rel="apple-touch-icon" href="img/apple-touch-icon.png">
@@ -230,7 +218,7 @@ svg{display:block;flex:none}
   border:1px solid transparent;
   transition:background-color .22s ease,color .22s ease,border-color .22s ease;
 }
-.btn--gold{background:var(--gold);color:#FFFBF4;border-color:var(--gold)}
+.btn--gold{background:var(--gold);color:#1B1408;border-color:var(--gold)}
 .btn--gold:hover{background:#B08749;border-color:#B08749}
 .btn--ghost{color:#fff;border-color:rgba(255,255,255,.82)}
 .btn--ghost:hover{background:#fff;color:#131110;border-color:#fff}
@@ -755,10 +743,17 @@ section[id]{scroll-margin-top:24px}
   "@context": "https://schema.org",
   "@type": "ClothingStore",
   "name": "Erica Logan Clothing Boutique",
+  "url": "https://ericaloganclths.com/",
   "alternateName": "Erica Logan Clothing, LLC",
   "description": "Mother and daughters owned women's clothing boutique on Main Street in Islip, New York. Curated clothing, shoes and accessories, with new arrivals every week.",
-  "image": "img/share-card.jpg",
+  "image": "https://ericaloganclths.com/img/share-card.jpg",
   "telephone": "+1-631-406-7846",
+  "priceRange": "$$",
+  "geo": {
+    "@type": "GeoCoordinates",
+    "latitude": 40.728723,
+    "longitude": -73.214950
+  },
   "address": {
     "@type": "PostalAddress",
     "streetAddress": "454 Main Street",
@@ -772,6 +767,7 @@ section[id]{scroll-margin-top:24px}
     { "@type": "OpeningHoursSpecification", "dayOfWeek": "Saturday", "opens": "11:00", "closes": "17:00" },
     { "@type": "OpeningHoursSpecification", "dayOfWeek": "Sunday", "opens": "12:00", "closes": "16:00" }
   ],
+  "hasMap": "https://www.google.com/maps/search/?api=1&query=Erica+Logan+Clothing+Boutique+454+Main+St+Islip+NY",
   "sameAs": [
     "https://www.instagram.com/ericaloganclothing/",
     "https://www.facebook.com/ericaloganclothing/"
@@ -814,7 +810,7 @@ section[id]{scroll-margin-top:24px}
       </ul>
     </nav>
 
-    <a class="logo" href="#" aria-label="Erica Logan Clothing Boutique — home">
+    <a class="logo" href="/" aria-label="Erica Logan Clothing Boutique — home">
       <img src="img/logo.webp" srcset="img/logo-500.webp 500w, img/logo.webp 900w" sizes="(max-width:900px) 196px, 400px" width="900" height="309" alt="Erica Logan Clothing Boutique">
     </a>
 

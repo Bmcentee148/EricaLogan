@@ -35,23 +35,17 @@ PRODUCTION CHECKLIST
 
 --- A. BLOCKERS -- wrong or broken if shipped as-is ---------------------------
 
-  [ ] DOMAIN. There is no longer a placeholder domain anywhere - it was
-      causing real harm and has been removed. canonical and og:url are now
-      ABSENT, and og:image / twitter:image / the JSON-LD image are RELATIVE
-      paths, so they resolve correctly wherever the site is hosted.
-      Nothing is broken as-is.
+  [x] DOMAIN -- DONE. The real domain is https://ericaloganclths.com/ and it
+      is now wired in everywhere:
+        - <link rel="canonical"> and og:url in the <head>
+        - og:image and twitter:image switched to absolute URLs
+        - JSON-LD "url", "image" (absolute) and "hasMap" added
+        - robots.txt and sitemap.xml created, both referencing the domain
+      If the domain ever changes, grep for  ericaloganclths.com  -- it appears
+      in index.html, robots.txt and sitemap.xml and nowhere else.
 
-      At launch, once the real domain is known, improve it by adding:
-        <link rel="canonical" href="https://REALDOMAIN.com/">
-        <meta property="og:url" content="https://REALDOMAIN.com/">
-      and switching og:image / twitter:image to absolute URLs. The exact
-      lines are in a comment at the top of index.html.
-
-      WHY IT WAS REMOVED: og:url tells Facebook, iMessage and Slack where a
-      shared link should point. With a placeholder in it, every share sent
-      people to a domain that did not exist. A wrong absolute URL is far
-      worse than a missing one - scrapers and Google both fall back to the
-      URL they actually fetched, which is correct by definition.
+      NOTE: that domain currently answers on /password, which is the Shopify
+      store-lock path. Confirm who controls the DNS before cutover.
 
   [ ] PRICES ARE INVENTED. All six were made up to fill the layout ($52-$88).
       Search for  card__price  and replace with real prices, or delete the
