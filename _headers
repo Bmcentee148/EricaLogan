@@ -1,0 +1,54 @@
+# ==============================================================
+# Netlify _headers
+#
+# Netlify reads this at deploy and adds these HTTP response
+# headers to matching requests. Two-space indentation under each
+# path pattern is REQUIRED - unindented lines are ignored.
+#
+# Cloudflare Pages reads this file too. Vercel does not (it uses
+# vercel.json), and a plain Apache/nginx host ignores it entirely.
+# ==============================================================
+
+
+# --- Every response ------------------------------------------
+/*
+  # Block other sites from loading this one in an iframe (clickjacking).
+  X-Frame-Options: DENY
+
+  # Make browsers trust the declared Content-Type instead of
+  # guessing it from the file's contents.
+  X-Content-Type-Options: nosniff
+
+  # Limit how much of our URL leaks when a visitor clicks out to
+  # Instagram, Facebook or Google Maps.
+  Referrer-Policy: strict-origin-when-cross-origin
+
+  # The site uses none of these APIs, so deny them outright.
+  Permissions-Policy: camera=(), microphone=(), geolocation=()
+
+
+# --- Images: cached for 7 days -------------------------------
+# NOT "max-age=31536000, immutable", which is the usual advice.
+# That is only safe when filenames carry a content hash. These
+# do not - they are plain names like cable-knit-sweater-520.webp
+# - so if a product photo is replaced under the same filename, a
+# year-long immutable cache would leave returning visitors seeing
+# the old image with no way to force a refresh. Seven days caps
+# that staleness while still saving the ~2MB of images on every
+# repeat visit within the week.
+#
+# If these ever get content-hashed filenames (build step, or a
+# manual -v2 suffix), this can safely become:
+#   Cache-Control: public, max-age=31536000, immutable
+/img/*
+  Cache-Control: public, max-age=604800
+
+
+# --- HTML is deliberately absent ------------------------------
+# No Cache-Control for index.html or 404.html on purpose.
+# Netlify's default (must-revalidate) is what we want: edits go
+# live immediately instead of being pinned in visitors' caches.
+#
+# Strict-Transport-Security is also absent on purpose - enable
+# "Force HTTPS" in the Netlify dashboard after the domain is
+# connected and Netlify sends HSTS itself.
