@@ -20,8 +20,10 @@ FILE STRUCTURE
   README.txt                      this file
   img/
     logo.webp / logo-500.webp     white wordmark, transparent background
-    hero-desktop.webp             landscape hero, used above 520px
-    hero-mobile.webp              portrait hero, used at 520px and below
+    hero-desktop.webp             1536x1024 landscape hero, used above 520px
+    hero-mobile.webp              768x1024 portrait hero, used at 520px and below
+                                  (3:4 crop of the same photo, source x500-1268,
+                                  chosen so the racks sit right of the text)
     share-card.jpg                1200x630 Open Graph / link preview image
     apple-touch-icon.png          180px home-screen icon
     icon-512.png                  spare large icon (not referenced yet)
@@ -51,15 +53,18 @@ PRODUCTION CHECKLIST
       Search for  card__price  and replace with real prices, or delete the
       six spans if they would rather not publish pricing.
 
-  [ ] HERO PHOTOS - CONFIRM THESE ARE THE REAL SHOP. Both heroes and the
-      share card now use the bright interior supplied on 15 Aug. It matches
-      the product photography (light plank floor, white walls, gold rails);
-      the previous images did not - they had dark wood floors. If this one is
-      a real photo of the Islip store, this item is DONE and the hero is
-      accurate. If it is another AI render, it still has to be replaced
-      before launch.
-      img/hero-mobile.webp is a portrait crop of the same photo, taken from
-      x=360 of the source - the calmest part of the frame for text to sit on.
+  [x] HERO PHOTOS ARE NOT THEIR SHOP. RESOLVED - the AI-generated interiors
+      have been replaced with the client-supplied photograph of the real
+      shop. hero-desktop.webp is the full frame; hero-mobile.webp is a 3:4
+      crop placing the racks to the right of the text; share-card.jpg was
+      rebuilt from the same photo at 1200x630. See "THE HERO PHOTO" below
+      for what is still outstanding on it.
+
+      NOTE: a different hero photo (the bright interior supplied 15 Aug,
+      1774x887, light plank floor and cream walls) was briefly on main and
+      has been deliberately superseded by this one. They are two different
+      rooms, not two crops of one - if there is any doubt about which is
+      the Islip shop, settle that before launch.
 
   [ ] LOGO LINK. The header logo is still  href="#" . Point it at "/".
 
@@ -142,9 +147,20 @@ PRODUCTION CHECKLIST
 
 --- D. IMAGERY ----------------------------------------------------------------
 
-  [ ] Hero photos - see BLOCKERS. Confirm the new bright image is real.
-  [x] Share card - rebuilt from the new hero. Keeps a dark left panel
-      because the wordmark asset is white; on a bright card it would vanish.
+  [x] Hero photos - real shop photo, supplied by the client.
+  [x] Share card - rebuilt at 1200x630 from the real hero photo, carrying
+      the wordmark treatment: img/logo.webp at 512px over a left panel,
+      then a gold rule and ISLIP, NEW YORK in Mulish 700 / .19em / #CFA470.
+      Same design as the version that was briefly on main, re-made against
+      this photo. Its panel runs deeper and further across than the site
+      scrim (.93 at the left edge, clearing at 100%) because this photo's
+      left side is busy floral wallpaper rather than a dark aisle - the
+      white script needs the extra cover to hold. See SHARE CARD below.
+  [ ] HIGHER-RESOLUTION HERO ORIGINAL. The supplied file is 1536x1024. The
+      hero is full-bleed, so anything wider than 1536 CSS px upscales, and
+      every retina screen upscales it 2x. Ask for the camera original.
+      (The superseded 15 Aug photo was 1774x887, so a wider original of
+      THIS room may well exist too - worth asking.)
   [x] Product photos - real, and good. Consistent hanger, rail, floor and the
       Erica Logan hang tags visible. A snapshot in time; swapped weekly.
   [ ] Category icons - AI-generated watercolour illustrations. Visually
@@ -173,6 +189,14 @@ PRODUCTION CHECKLIST
       walk-ins and NAP consistency.
   [ ] Ask whether their Google Business Profile is claimed and verified. For
       a walk-in shop that outranks anything on this site for local search.
+
+  [ ] SCRIM/IMAGE BREAKPOINT MISMATCH. The portrait hero swaps in at 520px
+      (the <source> media query) but the lighter mobile scrim starts at
+      900px (the @media max-width:900px block). Between 521 and 900px you
+      get the wide landscape photo under the scrim meant for the portrait
+      crop, so the headline sits on the brightest part of the wallpaper.
+      768px is the worst case. Pre-dates this photo, but the old hero was
+      dark on the left so it never showed. Align the two numbers.
 
 
 ===============================================================================
@@ -211,6 +235,24 @@ THE HERO IS LIGHT TYPE ON A DARK SCRIM
   in the token list for exactly that reason: --gold-lt for dark backgrounds,
   --gold-ink for light ones.
 
+SHARE CARD - HOW TO REBUILD IT
+  img/share-card.jpg is not a plain crop of the hero, it is a composed
+  card: the photo, a left scrim panel, img/logo.webp at 512px wide, an
+  86x2 gold rule, then ISLIP, NEW YORK in Mulish 700, .19em tracking,
+  #CFA470. Rendered as HTML at 1200x630 on a 2x viewport and downsampled
+  to 1200x630, saved JPEG q88 (~127KB). Rendering at 2x matters - the
+  wordmark is fine script and JPEG rings badly on it at 1x.
+
+  If the hero photo changes, this has to be re-made; it does not update
+  itself. Check two things when you do: that the white script still has
+  cover under it (this photo needed a much deeper panel than the previous
+  one), and that og:image:width/height still say 1200x630.
+
+  Note the painted "Erica" wall sign is faintly visible behind the
+  wordmark. It is their real signage and was left in, consistent with the
+  same decision on the hero, but it does put two "Erica"s on one card -
+  worth a look if the client is fussy about it.
+
 THE FOOTER DELIBERATELY DOES NOT REPEAT THE HOURS
   Address, phone and Instagram are duplicated there, but hours are not -
   they already live in three places (below) and a fourth copy is one more
@@ -232,8 +274,58 @@ WHY IMAGES ARE IN A FOLDER, NOT BASE64
   returning visitor to re-download the whole page.
 
 PAGE WEIGHT (own assets, whole page scrolled)
-  phone ~455KB / desktop 1x ~510KB / desktop 2x ~775KB
+  phone ~470KB / desktop 1x ~575KB / desktop 2x ~840KB
   Plus ~67KB of Google Fonts. The map adds ~1.8MB only if clicked.
+  The real hero costs ~65KB more than the AI one it replaced (desktop
+  147KB -> 212KB, mobile 89KB -> 104KB) - the floral wallpaper is
+  detail-dense and does not compress as well as the old soft-focus aisle.
+  Both are written at WebP q76; dropping to q68 saves another ~40KB if
+  the budget gets tight.
+
+
+THE HERO PHOTO
+  The scrim was tuned against the ORIGINAL hero, which had a dark, empty
+  aisle running down the left side - a naturally quiet bed for the
+  headline. The real photo does not have that. Its left half is bright,
+  high-contrast floral wallpaper plus a white fridge and white cabinets,
+  directly behind the text.
+
+  Measured, it still passes: the gold italic headline averages 6.5-7.3:1
+  against its backdrop at every breakpoint. But the brightest blooms
+  showing through the scrim drop to ~2.5:1 in small patches on desktop,
+  under the 3:1 WCAG minimum for large text. It reads as mottling rather
+  than as unreadable text.
+
+  DO NOT FIX THIS BY DARKENING THE SCRIM. The client asked for the scrim
+  to be pulled back from where it originally sat; the current values are
+  their call, not an oversight. The .hero h1 / .lede text-shadow was
+  strengthened instead - a tight shadow behind the letterforms only, so
+  the photo's brightness is untouched.
+
+  Know what that bought and what it did not. The shadow lifts the typical
+  case (p95 backdrop contrast 4.2 -> 4.5 on desktop, 5.5 -> 6.1 on mobile)
+  and visibly firms up the letterforms. It does NOT move the worst-case
+  hot spots: those blooms sit between the glyphs, where only the wide
+  28px layer reaches, and that layer is too diffuse to darken them -
+  measured, pushing its alpha from .35 to .70 moves the worst pixel from
+  2.53 to 2.57. So the sub-3:1 patches on desktop are still there. The
+  only things that would actually clear them are the scrim (ruled out) or
+  a differently framed desktop photo.
+
+  Two other things the new photo introduced:
+    - The painted "Erica Logan" wall sign is half-dimmed by the scrim and
+      the script "Logan" under it is illegible, so it reads as a smudge
+      rather than as signage. On desktop it sits at ~45% width, just right
+      of the headline. On mobile the chosen crop puts it at 23-42% width,
+      directly behind the gold rule, where the scrim is only 60-78% black.
+      This is the cost of the mobile framing: the sign sits between the
+      quiet wall and the racks, so any crop that puts empty space behind
+      the text also pulls the sign into it. LEFT AS IS on purpose - it is
+      their real wall sign, and the alternatives (darker scrim, or
+      retouching the sign out of hero-mobile.webp) were both declined.
+    - The pendant lights are sliced through by the top edge at wide
+      viewports, because the photo is 3:2 and the hero box is much wider
+      than that. Only fixable by cropping or a taller source frame.
 
 
 ===============================================================================

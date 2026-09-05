@@ -200,7 +200,10 @@ svg{display:block;flex:none}
   font-size:clamp(38px,4.65vw,72px);font-weight:400;
   line-height:1.08;letter-spacing:0;
   color:#fff;
-  text-shadow:0 2px 28px rgba(0,0,0,.35);
+  /* Wide glow lifts the type off the photo; the two tight layers hold the
+     letterforms where the wallpaper blooms come through the scrim bright.
+     Shadow only - deepening the scrim itself was ruled out by the client. */
+  text-shadow:0 2px 28px rgba(0,0,0,.35),0 1px 10px rgba(0,0,0,.55),0 0 3px rgba(0,0,0,.4);
 }
 .hero h1 em{font-style:italic;color:var(--gold-lt);}
 .rule{display:block;width:100px;height:2px;background:var(--gold-lt);margin:36px 0 38px}
@@ -208,6 +211,7 @@ svg{display:block;flex:none}
   margin:0;max-width:300px;
   font-size:20px;line-height:1.7;font-weight:400;
   color:var(--white-90);
+  text-shadow:0 1px 8px rgba(0,0,0,.5);
 }
 
 .cta{display:flex;flex-wrap:wrap;gap:24px;margin-top:42px}
@@ -853,8 +857,8 @@ section[id]{scroll-margin-top:24px}
 <main id="main">
   <section class="hero">
     <picture>
-      <source media="(max-width:520px)" srcset="img/hero-mobile.webp" width="900" height="1200">
-      <img class="hero__img" src="img/hero-desktop.webp" width="1717" height="916" alt="Inside Erica Logan Clothing Boutique: brass racks of curated women's clothing under crystal chandeliers.">
+      <source media="(max-width:520px)" srcset="img/hero-mobile.webp" width="768" height="1024">
+      <img class="hero__img" src="img/hero-desktop.webp" width="1536" height="1024" alt="Inside Erica Logan Clothing Boutique: brass rails of women's clothing beside the checkout counter, against floral wallpaper under a pressed-tin ceiling.">
     </picture>
     <div class="hero__scrim" aria-hidden="true"></div>
     <div class="hero__in">
