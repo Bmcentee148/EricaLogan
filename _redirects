@@ -1,0 +1,22 @@
+# ==============================================================
+# Netlify _redirects
+#
+# This repo deploys from GitHub, so every tracked file is served
+# at its path - including the internal docs. These rules hide the
+# ones that are for us, not for customers.
+#
+# The trailing "!" forces the rule. Without it Netlify serves an
+# existing file in preference to a redirect, and these files DO
+# exist in the deploy - so the force is the whole point.
+#
+# The files stay in the repo (version-controlled, useful); they
+# are just not reachable from the web.
+# ==============================================================
+
+# Build notes and launch checklist. Publicly readable at
+# /README.txt otherwise, where it states in plain text that the
+# product prices are placeholders.
+/README.txt      /404.html   404!
+
+# Codebase guidance for Claude Code.
+/CLAUDE.md       /404.html   404!
