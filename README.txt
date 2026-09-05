@@ -154,11 +154,14 @@ PRODUCTION CHECKLIST
 --- D. IMAGERY ----------------------------------------------------------------
 
   [x] Hero photos - real shop photo, supplied by the client.
-  [x] Share card - rebuilt at 1200x630 from the real hero photo.
-  [ ] SHARE CARD IS A PLAIN PHOTO CROP. The version briefly on main carried
-      a dark left panel behind the white wordmark. This one does not - it
-      is just the photo. If the wordmark treatment is wanted, it has to be
-      rebuilt against this image.
+  [x] Share card - rebuilt at 1200x630 from the real hero photo, carrying
+      the wordmark treatment: img/logo.webp at 512px over a left panel,
+      then a gold rule and ISLIP, NEW YORK in Mulish 700 / .19em / #CFA470.
+      Same design as the version that was briefly on main, re-made against
+      this photo. Its panel runs deeper and further across than the site
+      scrim (.93 at the left edge, clearing at 100%) because this photo's
+      left side is busy floral wallpaper rather than a dark aisle - the
+      white script needs the extra cover to hold. See SHARE CARD below.
   [ ] HIGHER-RESOLUTION HERO ORIGINAL. The supplied file is 1536x1024. The
       hero is full-bleed, so anything wider than 1536 CSS px upscales, and
       every retina screen upscales it 2x. Ask for the camera original.
@@ -237,6 +240,24 @@ THE HERO IS LIGHT TYPE ON A DARK SCRIM
   on a LIGHT veil, with the italic in --gold-ink (#7A5E30). Both golds exist
   in the token list for exactly that reason: --gold-lt for dark backgrounds,
   --gold-ink for light ones.
+
+SHARE CARD - HOW TO REBUILD IT
+  img/share-card.jpg is not a plain crop of the hero, it is a composed
+  card: the photo, a left scrim panel, img/logo.webp at 512px wide, an
+  86x2 gold rule, then ISLIP, NEW YORK in Mulish 700, .19em tracking,
+  #CFA470. Rendered as HTML at 1200x630 on a 2x viewport and downsampled
+  to 1200x630, saved JPEG q88 (~127KB). Rendering at 2x matters - the
+  wordmark is fine script and JPEG rings badly on it at 1x.
+
+  If the hero photo changes, this has to be re-made; it does not update
+  itself. Check two things when you do: that the white script still has
+  cover under it (this photo needed a much deeper panel than the previous
+  one), and that og:image:width/height still say 1200x630.
+
+  Note the painted "Erica" wall sign is faintly visible behind the
+  wordmark. It is their real signage and was left in, consistent with the
+  same decision on the hero, but it does put two "Erica"s on one card -
+  worth a look if the client is fussy about it.
 
 THE FOOTER DELIBERATELY DOES NOT REPEAT THE HOURS
   Address, phone and Instagram are duplicated there, but hours are not -
