@@ -263,9 +263,9 @@ svg{display:block;flex:none}
 body[data-lock="true"]{overflow:hidden}
 
 
-/* ============ NEW ARRIVALS ============ */
-.arrivals{background:var(--paper);color:var(--ink-deep)}
-.arrivals__in{max-width:1600px;margin-inline:auto;padding:clamp(56px,7vw,104px) var(--gut)}
+/* ============ IN THE SHOP ============ */
+.shop{background:var(--paper);color:var(--ink-deep)}
+.shop__in{max-width:1600px;margin-inline:auto;padding:clamp(56px,7vw,104px) var(--gut)}
 
 .sec-head{text-align:center;margin:0 auto clamp(36px,4.4vw,58px);max-width:640px}
 .sec-head h2{
@@ -278,36 +278,67 @@ body[data-lock="true"]{overflow:hidden}
 .sec-sub{margin:0;font-family:var(--display);font-style:italic;
   font-size:clamp(17px,1.5vw,23px);line-height:1.5;color:var(--gold-ink)}
 
-.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(18px,2vw,30px)}
-.card figure{margin:0}
-.card__img{
-  aspect-ratio:2/3;overflow:hidden;background:#E4E0DA;
-}
-.card__img img{width:100%;height:100%;object-fit:cover;transition:transform .7s cubic-bezier(.2,.7,.3,1)}
-.card:hover .card__img img{transform:scale(1.045)}
-.card figcaption{padding-top:16px}
-.card__name{
-  display:block;
-  font-size:clamp(12px,.95vw,13.5px);font-weight:700;
-  letter-spacing:.1em;text-transform:uppercase;
-}
-.card__price{
-  display:block;margin-top:7px;
-  font-size:clamp(13px,1vw,15px);font-weight:400;
-  letter-spacing:.02em;color:var(--ink-soft);
+/* Mosaic, not a product grid. These are photographs of the shop, so the
+   tiles carry no name or price - the caption sits over the image and the
+   whole thing is evergreen, which is the point: nothing here has to be
+   re-shot when the stock changes.
+   Every source photo is a different phone-camera aspect ratio (0.56 to
+   0.76), so each tile is a fixed 4:5 box with object-fit:cover. The crop
+   is baked into the .webp files as well - see img/shop and README. */
+.mosaic{display:grid;grid-template-columns:repeat(2,1fr);gap:clamp(14px,1.6vw,24px)}
+.tile{position:relative;margin:0;aspect-ratio:4/5;overflow:hidden;background:#E4E0DA}
+.tile img{width:100%;height:100%;object-fit:cover;transition:transform .8s cubic-bezier(.2,.7,.3,1)}
+.tile:hover img{transform:scale(1.045)}
+/* Scrim only under the caption, so the top two-thirds of every photo stays
+   untouched. Sized generously because the captions are one short line. */
+.tile figcaption{
+  position:absolute;left:0;right:0;bottom:0;
+  padding:44px clamp(14px,1.5vw,20px) clamp(13px,1.2vw,17px);
+  background:linear-gradient(to top,rgba(24,21,18,.72),rgba(24,21,18,.34) 46%,transparent);
+  color:#fff;
+  font-family:var(--display);font-style:italic;
+  font-size:clamp(14px,1.15vw,17px);line-height:1.35;
+  text-shadow:0 1px 3px rgba(0,0,0,.35);
 }
 
-.arrivals__foot{margin-top:clamp(40px,4.6vw,62px);text-align:center}
+/* Phones keep two columns - six stacked 4:5 tiles is a 3,000px scroll - but
+   the street shot and the storefront shot run full width, so the section
+   reads big / pair / pair / big instead of a flat grid. */
+@media (max-width:600px){
+  .tile--feature,.tile--store{grid-column:1 / -1}
+}
+/* Above 900 it becomes the real mosaic: the street shot runs two columns
+   wide and two rows tall, and the remaining five fill in around it. The
+   feature drops its aspect-ratio here and takes its height from the two
+   rows it spans, which land at very nearly 4:5 anyway. */
+@media (min-width:901px){
+  .mosaic{
+    grid-template-columns:repeat(3,1fr);
+    grid-template-areas:
+      "feature feature rails"
+      "feature feature tee"
+      "denim   jewelry store";
+  }
+  .tile--feature{grid-area:feature;aspect-ratio:auto}
+  .tile--rails{grid-area:rails}
+  .tile--tee{grid-area:tee}
+  .tile--denim{grid-area:denim}
+  .tile--jewelry{grid-area:jewelry}
+  .tile--store{grid-area:store}
+  .tile--feature figcaption{font-size:clamp(17px,1.5vw,22px)}
+}
+
+.shop__foot{margin-top:clamp(40px,4.6vw,62px);text-align:center}
 .btn--dark{color:var(--ink-deep);border-color:rgba(30,27,24,.45)}
 .btn--dark:hover{background:var(--ink-deep);color:var(--paper);border-color:var(--ink-deep)}
 /* lead-in sits above the CTA now. The gold italic on the second sentence is
    the same roman-then-italic pattern the hero headline uses, in --gold-ink
    because this section is on a light background. */
-.arrivals__note{
+.shop__note{
   margin:0 0 24px;
   font-size:clamp(15px,1.15vw,17px);line-height:1.6;color:var(--ink-soft);
 }
-.arrivals__note em{
+.shop__note em{
   font-family:var(--display);font-style:italic;
   font-size:1.14em;color:var(--gold-ink);
 }
@@ -331,7 +362,7 @@ body[data-lock="true"]{overflow:hidden}
      unobserves after first intersection. Sits inside the no-preference
      query on purpose: the reduced-motion path sets data-rv="in" too, and
      without this wrapper the shake would still run there. */
-  .arrivals__foot[data-rv="in"] .btn--ig svg{
+  .shop__foot[data-rv="in"] .btn--ig svg{
     animation:ig-jingle 1500ms ease-in-out 700ms 1 both;
     transform-origin:50% 45%;
   }
@@ -499,9 +530,9 @@ body[data-lock="true"]{overflow:hidden}
 .follow__handle svg{color:var(--gold-lt);flex:none;transition:transform .3s ease}
 .follow a.follow__handle:hover{color:var(--gold-lt)}
 .follow a.follow__handle:hover svg{transform:rotate(-6deg) scale(1.06)}
-/* Mirrors the New Arrivals CTA: sans lead-in, then the stat in gold italic.
+/* Mirrors the In the Shop CTA: sans lead-in, then the stat in gold italic.
    --gold-lt here (not --gold-ink) because this band is on the dark ground. */
-/* Same lead-in + gold-italic-emphasis pattern as the New Arrivals CTA,
+/* Same lead-in + gold-italic-emphasis pattern as the In the Shop CTA,
    inverted for the dark band: --gold-lt here, --gold-ink there. */
 .follow__sub{
   margin:18px auto 0;max-width:52ch;
@@ -715,13 +746,10 @@ body[data-lock="true"]{overflow:hidden}
   .foot__bar{justify-content:center;text-align:center}
   .vform__row{grid-template-columns:1fr}
   .visit__actions .btn{width:100%}
-  .grid{grid-template-columns:repeat(2,1fr);gap:14px}
+  .mosaic{gap:14px}
   .carry__grid{grid-template-columns:1fr;gap:0}
   .carry__item{grid-template-columns:72px 1fr}
   .carry__icon{width:72px}
-  .card figcaption{padding-top:12px}
-  .card__name{letter-spacing:.08em;min-height:2.6em}
-  .card__price{margin-top:4px}
 }
 
 @media (max-width:380px){
@@ -807,7 +835,7 @@ section[id]{scroll-margin-top:24px}
 
     <nav class="nav" aria-label="Primary">
       <ul>
-        <li><a href="#new-arrivals">New Arrivals</a></li>
+        <li><a href="#in-the-shop">In the Shop</a></li>
         <li><a href="#what-we-carry">What We Carry</a></li>
         <li><a href="#about">About</a></li>
         <li><a href="#visit">Visit Us</a></li>
@@ -836,7 +864,7 @@ section[id]{scroll-margin-top:24px}
     </button>
   </div>
   <ul>
-    <li><a href="#new-arrivals">New Arrivals</a></li>
+    <li><a href="#in-the-shop">In the Shop</a></li>
     <li><a href="#what-we-carry">What We Carry</a></li>
     <li><a href="#about">About</a></li>
     <li><a href="#visit">Visit Us</a></li>
@@ -870,7 +898,7 @@ section[id]{scroll-margin-top:24px}
       <span class="rule" aria-hidden="true"></span>
       <p class="lede">Curated pieces, timeless trends, and everyday favorites to help you look and feel your best.</p>
       <div class="cta">
-        <a class="btn btn--gold" href="#new-arrivals">See new arrivals</a>
+        <a class="btn btn--gold" href="#in-the-shop">Look inside</a>
         <a class="btn btn--ghost" href="#visit">Visit our boutique</a>
       </div>
       <p class="hero__loc">
@@ -880,110 +908,70 @@ section[id]{scroll-margin-top:24px}
     </div>
   </section>
 
-  <section class="arrivals" id="new-arrivals">
-    <div class="arrivals__in">
+  <section class="shop" id="in-the-shop">
+    <div class="shop__in">
       <div class="sec-head" data-rv>
-        <h2>New Arrivals</h2>
+        <h2>In the Shop</h2>
         <span class="sec-rule" aria-hidden="true"></span>
-        <p class="sec-sub">Fresh styles. Handpicked for you.</p>
+        <p class="sec-sub">A look around before you come in.</p>
       </div>
 
-      <!-- PLACEHOLDER PRICES: replace every .card__price with Erica's real prices before launch -->
-      <div class="grid stagger">
-        <article class="card" data-rv>
-          <figure>
-            <div class="card__img">
-              <img src="img/products/cable-knit-sweater-520.webp"
-                   srcset="img/products/cable-knit-sweater-400.webp 400w, img/products/cable-knit-sweater-520.webp 520w, img/products/cable-knit-sweater-820.webp 820w"
-                   sizes="(max-width:600px) 45vw, (max-width:1600px) 28.5vw, 456px"
-                   width="1000" height="1503" loading="lazy" decoding="async"
-                   alt="Cream cable-knit sweater on a white hanger at Erica Logan Clothing Boutique.">
-            </div>
-            <figcaption>
-              <span class="card__name">Cream Cable-Knit Sweater</span>
-              <span class="card__price">$72</span>
-            </figcaption>
-          </figure>
-        </article>
-        <article class="card" data-rv>
-          <figure>
-            <div class="card__img">
-              <img src="img/products/denim-jacket-520.webp"
-                   srcset="img/products/denim-jacket-400.webp 400w, img/products/denim-jacket-520.webp 520w, img/products/denim-jacket-820.webp 820w"
-                   sizes="(max-width:600px) 45vw, (max-width:1600px) 28.5vw, 456px"
-                   width="1000" height="1503" loading="lazy" decoding="async"
-                   alt="Light-wash denim jacket with rolled cuffs on a white hanger.">
-            </div>
-            <figcaption>
-              <span class="card__name">Denim Jacket</span>
-              <span class="card__price">$88</span>
-            </figcaption>
-          </figure>
-        </article>
-        <article class="card" data-rv>
-          <figure>
-            <div class="card__img">
-              <img src="img/products/embroidered-blouse-520.webp"
-                   srcset="img/products/embroidered-blouse-400.webp 400w, img/products/embroidered-blouse-520.webp 520w, img/products/embroidered-blouse-820.webp 820w"
-                   sizes="(max-width:600px) 45vw, (max-width:1600px) 28.5vw, 456px"
-                   width="1000" height="1503" loading="lazy" decoding="async"
-                   alt="Cream blouse with blue floral embroidery on a white hanger.">
-            </div>
-            <figcaption>
-              <span class="card__name">Embroidered Floral Blouse</span>
-              <span class="card__price">$68</span>
-            </figcaption>
-          </figure>
-        </article>
-        <article class="card" data-rv>
-          <figure>
-            <div class="card__img">
-              <img src="img/products/washed-pullover-520.webp"
-                   srcset="img/products/washed-pullover-400.webp 400w, img/products/washed-pullover-520.webp 520w, img/products/washed-pullover-820.webp 820w"
-                   sizes="(max-width:600px) 45vw, (max-width:1600px) 28.5vw, 456px"
-                   width="1000" height="1503" loading="lazy" decoding="async"
-                   alt="Washed-brown crewneck pullover on a white hanger.">
-            </div>
-            <figcaption>
-              <span class="card__name">Washed Crewneck Pullover</span>
-              <span class="card__price">$52</span>
-            </figcaption>
-          </figure>
-        </article>
-        <article class="card" data-rv>
-          <figure>
-            <div class="card__img">
-              <img src="img/products/linen-wide-leg-pants-520.webp"
-                   srcset="img/products/linen-wide-leg-pants-400.webp 400w, img/products/linen-wide-leg-pants-520.webp 520w, img/products/linen-wide-leg-pants-820.webp 820w"
-                   sizes="(max-width:600px) 45vw, (max-width:1600px) 28.5vw, 456px"
-                   width="1000" height="1503" loading="lazy" decoding="async"
-                   alt="Natural linen wide-leg drawstring pants on a hanger.">
-            </div>
-            <figcaption>
-              <span class="card__name">Linen Wide-Leg Pants</span>
-              <span class="card__price">$64</span>
-            </figcaption>
-          </figure>
-        </article>
-        <article class="card" data-rv>
-          <figure>
-            <div class="card__img">
-              <img src="img/products/sage-cardigan-520.webp"
-                   srcset="img/products/sage-cardigan-400.webp 400w, img/products/sage-cardigan-520.webp 520w, img/products/sage-cardigan-820.webp 820w"
-                   sizes="(max-width:600px) 45vw, (max-width:1600px) 28.5vw, 456px"
-                   width="1000" height="1503" loading="lazy" decoding="async"
-                   alt="Sage green open-front cardigan with pockets on a white hanger.">
-            </div>
-            <figcaption>
-              <span class="card__name">Sage Open-Front Cardigan</span>
-              <span class="card__price">$58</span>
-            </figcaption>
-          </figure>
-        </article>
+      <!-- PLACEHOLDER CAPTIONS: the six <figcaption> lines are mine, not Erica's.
+           Get her voice on them before launch. The photographs themselves are
+           client-supplied and real - see README section D. -->
+      <div class="mosaic stagger">
+        <figure class="tile tile--feature" data-rv>
+          <img src="img/shop/street-style-1100.webp"
+               srcset="img/shop/street-style-700.webp 700w, img/shop/street-style-1100.webp 1100w, img/shop/street-style-2100.webp 2100w"
+               sizes="(max-width:600px) 92vw, (max-width:900px) 46vw, 62vw"
+               width="2100" height="2625" loading="lazy" decoding="async"
+               alt="A customer stands on the sidewalk outside the shop in a black top and leopard-print wide-leg trousers, with shops and traffic on the street behind her.">
+          <figcaption>Out the door in something new.</figcaption>
+        </figure>
+        <figure class="tile tile--rails" data-rv>
+          <img src="img/shop/gold-rails-620.webp"
+               srcset="img/shop/gold-rails-420.webp 420w, img/shop/gold-rails-620.webp 620w, img/shop/gold-rails-1040.webp 1040w"
+               sizes="(max-width:600px) 46vw, (max-width:900px) 46vw, 31vw"
+               width="1040" height="1300" loading="lazy" decoding="async"
+               alt="Brass clothing rails inside the boutique, hung with denim jackets, trench coats, knits and lace tops, with handbags on the white shelf above.">
+          <figcaption>The gold rails.</figcaption>
+        </figure>
+        <figure class="tile tile--tee" data-rv>
+          <img src="img/shop/graphic-tee-620.webp"
+               srcset="img/shop/graphic-tee-420.webp 420w, img/shop/graphic-tee-620.webp 620w, img/shop/graphic-tee-881.webp 881w"
+               sizes="(max-width:600px) 46vw, (max-width:900px) 46vw, 31vw"
+               width="881" height="1101" loading="lazy" decoding="async"
+               alt="A woman in the shop wearing a cream graphic tee and light-wash jeans, standing in front of the flower wall.">
+          <figcaption>Graphic tees and good jeans.</figcaption>
+        </figure>
+        <figure class="tile tile--denim" data-rv>
+          <img src="img/shop/denim-table-620.webp"
+               srcset="img/shop/denim-table-420.webp 420w, img/shop/denim-table-620.webp 620w, img/shop/denim-table-1040.webp 1040w"
+               sizes="(max-width:600px) 46vw, (max-width:900px) 46vw, 31vw"
+               width="1040" height="1300" loading="lazy" decoding="async"
+               alt="A display table stacked with folded jeans in cream and blue washes, in front of rails of striped shirts and floral dresses.">
+          <figcaption>Denim, folded and waiting.</figcaption>
+        </figure>
+        <figure class="tile tile--jewelry" data-rv>
+          <img src="img/shop/jewelry-620.webp"
+               srcset="img/shop/jewelry-420.webp 420w, img/shop/jewelry-620.webp 620w, img/shop/jewelry-1040.webp 1040w"
+               sizes="(max-width:600px) 46vw, (max-width:900px) 46vw, 31vw"
+               width="1040" height="1300" loading="lazy" decoding="async"
+               alt="A gold carousel stand hung with beaded necklaces in many colours, beside a tiered stand of chunky stone and resin bracelets.">
+          <figcaption>The jewelry counter.</figcaption>
+        </figure>
+        <figure class="tile tile--store" data-rv>
+          <img src="img/shop/storefront-620.webp"
+               srcset="img/shop/storefront-420.webp 420w, img/shop/storefront-620.webp 620w, img/shop/storefront-1040.webp 1040w"
+               sizes="(max-width:600px) 92vw, (max-width:900px) 46vw, 31vw"
+               width="1040" height="1300" loading="lazy" decoding="async"
+               alt="A customer outside the boutique window in a floral kaftan, holding a kraft-paper shopping bag, with the painted gold flowers of the shop window behind her.">
+          <figcaption>Bag in hand, back out onto the street.</figcaption>
+        </figure>
       </div>
 
-      <div class="arrivals__foot" data-rv>
-        <p class="arrivals__note">See what landed this week. <em>5,000+ following along.</em></p>
+      <div class="shop__foot" data-rv>
+        <p class="shop__note">See what landed this week. <em>5,000+ following along.</em></p>
         <a class="btn btn--gold btn--ig" href="https://www.instagram.com/ericaloganclothing/" target="_blank" rel="noopener">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1.1" fill="currentColor" stroke="none"/></svg>
           @ericaloganclothing
@@ -1306,7 +1294,7 @@ section[id]{scroll-margin-top:24px}
     <nav class="foot__col" aria-labelledby="foot-explore">
       <h2 class="foot__label" id="foot-explore">Explore</h2>
       <ul>
-        <li><a href="#new-arrivals">New Arrivals</a></li>
+        <li><a href="#in-the-shop">In the Shop</a></li>
         <li><a href="#what-we-carry">What We Carry</a></li>
         <li><a href="#about">About</a></li>
         <li><a href="#visit">Visit Us</a></li>

@@ -4,7 +4,7 @@ Marketing site - SPEC BUILD
 
 WHAT THIS IS
   A pitch/spec build, not a finished site. Sections built so far:
-      Hero -> New Arrivals -> What We Carry -> About -> Visit Us
+      Hero -> In the Shop -> What We Carry -> About -> Visit Us
       -> Follow Along -> Footer
   Some copy, all prices, and both hero photos are placeholders. The
   PRODUCTION CHECKLIST below lists everything that has to change before this
@@ -28,7 +28,13 @@ FILE STRUCTURE
     apple-touch-icon.png          180px home-screen icon
     icon-512.png                  spare large icon (not referenced yet)
     icons/                        6 category illustrations, What We Carry
-    products/                     6 products x 3 sizes (-400, -520, -820)
+    shop/                         In the Shop mosaic. 6 client photos x 3
+                                  sizes, all cropped to 4:5. The street shot
+                                  (street-style) is the feature tile and runs
+                                  700/1100/2100; the other five run
+                                  420/620/1040, except graphic-tee, whose
+                                  source is only 881px wide so its top size
+                                  is 881. See "THE IN THE SHOP MOSAIC" below.
 
 
 ===============================================================================
@@ -49,9 +55,19 @@ PRODUCTION CHECKLIST
       NOTE: that domain currently answers on /password, which is the Shopify
       store-lock path. Confirm who controls the DNS before cutover.
 
-  [ ] PRICES ARE INVENTED. All six were made up to fill the layout ($52-$88).
-      Search for  card__price  and replace with real prices, or delete the
-      six spans if they would rather not publish pricing.
+  [x] PRICES ARE INVENTED. RESOLVED by deletion. The six product cards and
+      their made-up $52-$88 prices are gone - New Arrivals is now In the
+      Shop, a photo mosaic with no names and no prices, so there is nothing
+      left to price. If they ever DO want pricing on the page it has to come
+      from them; do not reconstruct the old cards from git history and
+      re-use the numbers, they were invented.
+
+  [ ] PERMISSION FOR THE PEOPLE IN THE PHOTOS. Three of the six In the Shop
+      photos show identifiable faces - the street-style shot, the graphic-tee
+      shot, and the storefront shot. Erica supplied them, but supplying a
+      photo is not the same as the person in it agreeing to sit on a public
+      website indefinitely. Confirm each one, and confirm whether any of them
+      is a customer rather than family or staff. This is a launch blocker.
 
   [x] HERO PHOTOS ARE NOT THEIR SHOP. RESOLVED - the AI-generated interiors
       have been replaced with the client-supplied photograph of the real
@@ -123,8 +139,13 @@ PRODUCTION CHECKLIST
   [ ] Hero lede            "Curated pieces, timeless trends, and everyday
                             favorites..." - generic, and now slightly at odds
                             with the headline's stronger voice
-  [ ] New Arrivals sub     "Fresh styles. Handpicked for you."
-  [ ] New Arrivals note    "New pieces land on the racks every week."
+  [ ] In the Shop sub      "A look around before you come in."
+  [ ] In the Shop captions The six one-liners over the photos ("The gold
+                            rails.", "Denim, folded and waiting.", "Bag in
+                            hand, back out onto the street." and so on) are
+                            mine. They are the most voice-y copy on the page
+                            and the easiest for her to rewrite - ask.
+  [ ] In the Shop note     "See what landed this week."
   [ ] What We Carry sub    "A little of everything, chosen one piece at a time."
   [ ] 6 category blurbs    e.g. "washes that wear in, not out"
   [ ] What We Carry close  "Not sure where to start? That's what we're here for."
@@ -136,10 +157,9 @@ PRODUCTION CHECKLIST
                             their Facebook advertises it - the wording is mine
   [ ] Follow Along sub     "See the shop between visits."
   [ ] Meta description, og and twitter descriptions
-  [ ] 6 product names      Descriptive, not their SKU names. Note the file
-                            named grey_pullover is actually warm brown; it is
-                            labelled "Washed Crewneck Pullover" with no colour
-                            word, so nothing on the page is inaccurate.
+  [x] 6 product names      GONE with the product cards. Nothing in In the
+                            Shop names or prices a garment, which is the
+                            point - see WHY NEW ARRIVALS BECAME IN THE SHOP.
 
   The hero headline ("The little boutique everyone tells their friends
   about.") came from the client side, so that one is fine.
@@ -161,8 +181,18 @@ PRODUCTION CHECKLIST
       every retina screen upscales it 2x. Ask for the camera original.
       (The superseded 15 Aug photo was 1774x887, so a wider original of
       THIS room may well exist too - worth asking.)
-  [x] Product photos - real, and good. Consistent hanger, rail, floor and the
-      Erica Logan hang tags visible. A snapshot in time; swapped weekly.
+  [x] In the Shop photos - six, all supplied by the client, all real. Phone
+      photographs rather than product photography: mixed aspect ratios (0.56
+      to 0.76), mixed light, no two framed alike. That is exactly why they
+      are laid out as a mosaic and not as a product grid - see WHY NEW
+      ARRIVALS BECAME IN THE SHOP below. Consent on the three with faces in
+      them is still open, in section A.
+  [ ] LOW-RESOLUTION SOURCE on the graphic-tee photo: 881x1408, the smallest
+      of the six. Fine at the tile sizes it is served at, but it cannot be
+      promoted to the feature slot. If they have the camera original, take it.
+  [x] The old product photos (img/products, 6 slugs x 3 sizes) were deleted
+      when the section changed. They are in git history if they are ever
+      wanted back.
   [ ] Category icons - AI-generated watercolour illustrations. Visually
       consistent with the palette, but confirm the client is comfortable
       using AI artwork and check whatever licence applies.
@@ -203,16 +233,59 @@ PRODUCTION CHECKLIST
 HOW THINGS WORK (maintenance notes)
 ===============================================================================
 
-SWAPPING IN NEW ARRIVALS
-  Each product needs THREE files at the same slug:
-      <slug>-400.webp   <slug>-520.webp   <slug>-820.webp
-  From a 1000x1503 source (2:3 portrait). The three sizes match the srcset
-  ladder in index.html - a phone pulls 400, desktop pulls 520, retina pulls
-  820. Keep all three or the wrong size gets served.
-  Then update the slug, name, price and alt text in index.html.
+WHY NEW ARRIVALS BECAME IN THE SHOP
+  The client did not want to be updating the website every week, and a
+  section called New Arrivals is a promise to do exactly that - it is stale
+  the moment it is not true, and a visibly stale "new" section reads worse
+  than having none.
 
-  Shooting them: same hanger, same rail, same distance, same light every
-  time. The grid only reads as a set because the framing matches.
+  The photographs she then supplied settled it. All six are phone photos of
+  the shop and the people in it, not garments on a hanger against a wall.
+  Not one of them shows a single item cleanly enough to carry a name and a
+  price, and no price on this site may be invented (see the checklist). So
+  the section stopped pretending to be a catalogue: it is now six pictures
+  of a real shop with one atmospheric line over each, no names, no prices,
+  nothing that expires. The weekly churn moved to where it already lives -
+  the Instagram CTA at the foot of the section, which is unchanged.
+
+  The announcement bar still says "New arrivals dropping weekly". That is
+  fine and should stay: it is sourced (a business listing), it is a claim
+  about the shop rather than about the page, and nothing on the page now
+  has to be re-shot to keep it true.
+
+THE IN THE SHOP MOSAIC
+  Six tiles, every one a 4:5 portrait box:
+
+      >900px   street shot 2 cols x 2 rows, rails and tee stacked beside it,
+               denim / jewelry / storefront across the bottom
+      601-900  a plain 2 x 3 grid
+      <=600    2 columns, but the street shot and the storefront shot span
+               both, so it reads big / pair / pair / big rather than a flat
+               grid or a 3,000px single-column scroll
+
+  The feature tile drops its aspect-ratio above 900px and takes its height
+  from the two rows it spans, which land at very nearly 4:5 on their own.
+
+  SWAPPING A PHOTO. Three files at the same slug:
+      <slug>-420.webp   <slug>-620.webp   <slug>-1040.webp
+  (the feature slot is 700/1100/2100 instead - it is twice the width). Crop
+  to 4:5 first, then resize; the crop is baked into the files, the CSS only
+  does object-fit:cover as a safety net. Never upscale - graphic-tee tops
+  out at 881 because its source does. Then update the slug in all three
+  srcset entries, the src, the width/height, the alt text and the caption.
+
+  These do NOT need to match each other the way the old product shots did.
+  The mosaic is meant to look like a phone camera roll - mixed light and
+  mixed framing is the texture, not a defect. What it does need is for the
+  street shot to stay in the feature slot, or something with comparable
+  resolution: it is the only source above 1200px wide and the only one that
+  can fill a 2,100px tile.
+
+  Section weight is about 442KB at 1x desktop, against 279KB for the six
+  product cards it replaced. Encoded at webp q72 - these are detailed
+  photographs (beads, denim texture, a whole streetscape), so they cost more
+  per tile than a garment on a plain wall did. Everything is loading="lazy"
+  and the section is below the fold, so none of it touches LCP.
 
 THE MAP IS CLICK-TO-LOAD - LEAVE IT THAT WAY
   The Google Maps embed pulls ~1.8MB of third-party JS and tiles, four times
@@ -338,4 +411,5 @@ SOURCES FOR ANYTHING FACTUAL ON THE PAGE
   Phone                              their Facebook page (old address on it)
   Shoes, private shopping parties    their own Facebook page text
   Weekly arrivals / Wednesdays       business listing
+  In the Shop photographs            supplied directly by the owners
   Owner names                        AI search summary only - UNVERIFIED
