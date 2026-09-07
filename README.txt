@@ -139,17 +139,36 @@ PRODUCTION CHECKLIST
   [ ] Hero lede            "Curated pieces, timeless trends, and everyday
                             favorites..." - generic, and now slightly at odds
                             with the headline's stronger voice
-  [ ] In the Shop sub      "A look around before you come in."
-  [ ] In the Shop captions Down to two - "Out the door in something new."
-                            on the street shot and "Bag in hand, back out
-                            onto the street." on the storefront shot. Both
-                            mine. There were six; four were cut because six
-                            identical captions read as a template.
-  [ ] In the Shop band     "Come in, try things on, stay a while." - the
-                            headline in the dark band. Mine, and the most
-                            voice-y line on the page after the hero, so it
-                            is the one most worth getting from her. The
-                            "Main Street, Islip" link under it is sourced.
+  [?] In the Shop sub      "Come see what's waiting on Main Street."
+                            Came back from the client side during review,
+                            not written here - but nobody has confirmed
+                            whether it is Erica's own wording or the
+                            agency's. Ask; if it is hers, close this.
+  [?] Feature caption      "Try it on. Fall in love. Wear it out." Also
+                            came back from the client side; same question
+                            about whose words they are.
+                            NOTE, raised and overruled, recorded so it is
+                            not re-litigated: "wear it out" also idiomatically
+                            means to wear a garment until it is ruined. The
+                            intended reading is "wear it out of the shop" and
+                            most people land there. Kept deliberately. If it
+                            is ever revisited, "Wear it home." keeps the
+                            three-beat rhythm and loses the ambiguity.
+  [ ] Lower caption        "Bag in hand, back out onto the street." Mine,
+                            still. There were six captions; four were cut
+                            because six identical ones read as a template.
+  [?] In the Shop band     "Clothes you'll actually wear. / Pieces you'll
+                            keep reaching for." Client-side, same question.
+                            It is positioning rather than a sourced fact -
+                            a promise about the merchandise, not a claim
+                            like a price or an address - so it carries no
+                            sourcing burden, but it should still be a line
+                            they are happy to stand behind.
+  [ ] MAIN STREET SAID TWICE. The section sub now says "on Main Street" and
+      the band's link under it says "MAIN STREET, ISLIP" - twice inside one
+      section, and a third time in the Visit Us sub. Fine for local SEO,
+      clunky to read. Easiest fix is to relabel the band link (it points at
+      #visit, so "HOURS & DIRECTIONS" does the same job and reads better).
   [ ] In the Shop note     "See what landed this week."
   [ ] What We Carry sub    "A little of everything, chosen one piece at a time."
   [ ] 6 category blurbs    e.g. "washes that wear in, not out"
@@ -294,8 +313,19 @@ THE DARK BAND IN THE MOSAIC (.mosaic__say)
     3. The shared grade on the photographs - see below.
 
   The band is not decoration: it links to #visit, so the section now points
-  somewhere. If the copy changes, keep the <br> - the line is broken by hand
-  at the comma so the italic phrase is never split across lines.
+  somewhere.
+
+  Two things in it are hand-set and will silently rot if the copy is edited
+  without them:
+    - the <br>, which puts one sentence per line and lets the roman/italic
+      split fall on the sentence boundary. Without it the two sentences run
+      together and the gold italic starts mid-line.
+    - the &nbsp; in "reaching&nbsp;for.", which stops "for." being left
+      alone on its own line on a phone. At 390px that phrase wraps whatever
+      you do; the nbsp only decides where.
+  The inset gold frame is a ::before at inset clamp(12px,1.4vw,20px), and
+  the band's padding is always comfortably larger than that inset so the
+  type never crowds it. If the padding is ever reduced, check both.
 
 THE SHARED GRADE ON THE PHOTOGRAPHS
   Six phone photos taken at different times of day in different light. Left

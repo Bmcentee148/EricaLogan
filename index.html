@@ -310,15 +310,28 @@ body[data-lock="true"]{overflow:hidden}
    brand gold appears at any size below the hero, and it gives the mosaic a
    job beyond decoration - it points at Visit Us. */
 .mosaic__say{
+  position:relative;
   display:flex;flex-direction:column;align-items:center;justify-content:center;
-  text-align:center;gap:18px;
-  padding:clamp(38px,4.4vw,62px) clamp(22px,4vw,56px);
+  text-align:center;gap:clamp(20px,2vw,30px);
+  padding:clamp(46px,5.2vw,78px) clamp(26px,4.6vw,64px);
   background:var(--ink-deep);color:var(--cream);
+}
+/* Inset hairline frame. The one piece of ornament on the page, and the
+   reason the band reads as a plate rather than a coloured rectangle. Gold
+   at .30 - at full strength it turns brassy against the ink and starts
+   looking like a certificate. Pseudo-element so it costs no layout, and
+   the padding is always well clear of the inset so type never crowds it. */
+.mosaic__say::before{
+  content:"";position:absolute;inset:clamp(12px,1.4vw,20px);
+  border:1px solid rgba(207,164,112,.30);
+  pointer-events:none;
 }
 .mosaic__say p{
   margin:0;max-width:24ch;
   font-family:var(--display);font-weight:400;
-  font-size:clamp(23px,2.5vw,38px);line-height:1.22;
+  font-size:clamp(21px,2.9vw,44px);line-height:1.16;
+  /* large Playfair sets loose by default; a hair tighter at display size */
+  letter-spacing:-.005em;
 }
 /* Same roman-then-gold-italic pattern the hero headline uses. */
 .mosaic__say em{font-style:italic;color:var(--gold-lt)}
@@ -963,7 +976,7 @@ section[id]{scroll-margin-top:24px}
       <div class="sec-head" data-rv>
         <h2>In the Shop</h2>
         <span class="sec-rule" aria-hidden="true"></span>
-        <p class="sec-sub">A look around before you come in.</p>
+        <p class="sec-sub">Come see what&rsquo;s waiting on Main Street.</p>
       </div>
 
       <!-- PLACEHOLDER CAPTIONS: the two <figcaption> lines are mine, not
@@ -976,7 +989,7 @@ section[id]{scroll-margin-top:24px}
                sizes="(max-width:600px) 92vw, (max-width:900px) 46vw, 62vw"
                width="2100" height="2625" loading="lazy" decoding="async"
                alt="A customer stands on the sidewalk outside the shop in a black top and leopard-print wide-leg trousers, with shops and traffic on the street behind her.">
-          <figcaption>Out the door in something new.</figcaption>
+          <figcaption>Try it on. Fall in love. Wear it out.</figcaption>
         </figure>
         <figure class="tile tile--rails" data-rv>
           <img src="img/shop/gold-rails-620.webp"
@@ -995,7 +1008,7 @@ section[id]{scroll-margin-top:24px}
         <!-- PLACEHOLDER COPY: the headline is mine. "Main Street, Islip" is
              sourced (business listing + geocode); the invitation is not. -->
         <div class="mosaic__say" data-rv>
-          <p>Come in, try things on,<br><em>stay a while.</em></p>
+          <p>Clothes you&rsquo;ll actually wear.<br><em>Pieces you&rsquo;ll keep reaching&nbsp;for.</em></p>
           <a href="#visit">Main Street, Islip</a>
         </div>
         <figure class="tile tile--denim" data-rv>
