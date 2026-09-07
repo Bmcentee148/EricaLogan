@@ -100,13 +100,44 @@ PRODUCTION CHECKLIST
 
 --- B. FACTS TO CONFIRM WITH THE OWNERS ---------------------------------------
 
-  [ ] STREET ADDRESS. A business listing says "454 Main St". Google geocodes
-      that to "454 E MAIN St, Islip NY 11751" and the map pin lands correctly.
-      Confirm whether the street is signed East Main. This matters more than
+  [~] STREET ADDRESS. Close to settled, and the answer is "454 Main St" -
+      keep what is on the page. Evidence, strongest first:
+        - THEIR OWN Facebook post announcing the Islip opening is titled
+          "454 MAIN ST ISLIP NY 11751 IS OFFICIALLY OPEN". The owners'
+          own words, specific and dated. No "East".
+        - A business listing also says "454 Main St".
+        - AGAINST: Google's geocoder normalises the same string to
+          "454 E Main St", and at least one scraper site (wanderboat)
+          echoes that form - almost certainly downstream of the same
+          geocode rather than independent.
+      The geocoder normalising to the USPS form is NOT the business
+      listing itself as East Main, and it is the business's own published
+      form that NAP consistency is measured against. Matching the geocoder
+      would put the site out of sync with their own Facebook.
+      Still worth one question to the owners - is the street signed East
+      Main? - but do not "fix" this to East Main on the geocode alone. This matters more than
       it looks: NAP (name/address/phone) consistency across the site, their
       Google Business Profile and their Facebook is a real local-search
       ranking factor, and a mismatch works against them.
-      Appears in: the Visit Us block, the map card, and the JSON-LD.
+      Appears in NINE places, all of which move together. Grep for  454  -
+      do not work from memory, this list has already been undercounted once:
+
+        as visible or structured text ("454 Main Street")
+          1. the In the Shop band's link
+          2. the Visit Us address block
+          3. the map card's address line
+          4. the footer address
+          5. JSON-LD streetAddress
+        inside Google Maps query URLs ("454+Main+St")
+          6. the "Get directions" button
+          7. the map card's data-embed
+          8. the map card's "Open in Google Maps" link
+          9. JSON-LD hasMap
+
+      The five text instances are the ones that matter for NAP; the four URL
+      instances only have to keep resolving to the right pin. Note the text
+      form spells "Street" and the URL form abbreviates "St" - that is fine
+      as-is, but if the street turns out to be East Main, all nine change.
 
   [ ] PHONE. (631) 406-7846 comes from their Facebook page - the same page
       that still lists the OLD Hauppauge address. Confirm it reaches Islip.
@@ -164,11 +195,13 @@ PRODUCTION CHECKLIST
                             like a price or an address - so it carries no
                             sourcing burden, but it should still be a line
                             they are happy to stand behind.
-  [ ] MAIN STREET SAID TWICE. The section sub now says "on Main Street" and
-      the band's link under it says "MAIN STREET, ISLIP" - twice inside one
-      section, and a third time in the Visit Us sub. Fine for local SEO,
-      clunky to read. Easiest fix is to relabel the band link (it points at
-      #visit, so "HOURS & DIRECTIONS" does the same job and reads better).
+  [~] MAIN STREET SAID TWICE. Mostly settled. The section sub says "on Main
+      Street" as prose and the band's link now says "454 MAIN STREET, ISLIP"
+      as an address, so the two read as invitation and hard fact rather than
+      as a repetition. Deliberately no state or ZIP in the band: the number
+      is what a walk-in actually needs, and "NY 11751" under the headline
+      turns the plate into a business card. Visit Us and the map carry the
+      full form.
   [ ] In the Shop note     "See what landed this week."
   [ ] What We Carry sub    "A little of everything, chosen one piece at a time."
   [ ] 6 category blurbs    e.g. "washes that wear in, not out"
@@ -489,4 +522,6 @@ SOURCES FOR ANYTHING FACTUAL ON THE PAGE
   Shoes, private shopping parties    their own Facebook page text
   Weekly arrivals / Wednesdays       business listing
   In the Shop photographs            supplied directly by the owners
+  Islip street address               their own Facebook post, "454 MAIN
+                                     ST ISLIP NY 11751 IS OFFICIALLY OPEN"
   Owner names                        AI search summary only - UNVERIFIED
