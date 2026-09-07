@@ -302,10 +302,58 @@ body[data-lock="true"]{overflow:hidden}
 }
 
 /* Phones keep two columns - six stacked 4:5 tiles is a 3,000px scroll - but
-   the street shot and the storefront shot run full width, so the section
-   reads big / pair / pair / big instead of a flat grid. */
+   the street shot, the copy band and the storefront shot run full width, so
+   it reads big / pair / band / pair / big rather than a flat grid. */
+/* The typographic break. Six photographs in six identical boxes read as a
+   camera roll however good the photographs are; this is the thing that makes
+   the section look designed rather than filled. It is also the only place the
+   brand gold appears at any size below the hero, and it gives the mosaic a
+   job beyond decoration - it points at Visit Us. */
+.mosaic__say{
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  text-align:center;gap:18px;
+  padding:clamp(38px,4.4vw,62px) clamp(22px,4vw,56px);
+  background:var(--ink-deep);color:var(--cream);
+}
+.mosaic__say p{
+  margin:0;max-width:24ch;
+  font-family:var(--display);font-weight:400;
+  font-size:clamp(23px,2.5vw,38px);line-height:1.22;
+}
+/* Same roman-then-gold-italic pattern the hero headline uses. */
+.mosaic__say em{font-style:italic;color:var(--gold-lt)}
+.mosaic__say a{
+  color:var(--gold-lt);text-decoration:none;
+  font-size:clamp(11px,.85vw,12.5px);font-weight:700;
+  letter-spacing:.19em;text-transform:uppercase;
+  padding-bottom:5px;border-bottom:1px solid rgba(207,164,112,.42);
+  transition:color .3s ease,border-color .3s ease;
+}
+.mosaic__say a:hover{color:var(--cream);border-color:var(--cream)}
+@media (min-width:901px){
+  .mosaic__say p{max-width:none}
+}
+
 @media (max-width:600px){
-  .tile--feature,.tile--store{grid-column:1 / -1}
+  .tile--feature,.tile--store,.mosaic__say{grid-column:1 / -1}
+}
+/* Tablet is placed explicitly rather than auto-flowed: the copy band needs
+   both columns, and auto-placement would leave a hole in the row above it. */
+@media (min-width:601px) and (max-width:900px){
+  .mosaic{
+    grid-template-areas:
+      "feature rails"
+      "tee     denim"
+      "say     say"
+      "jewelry store";
+  }
+  .tile--feature{grid-area:feature}
+  .tile--rails{grid-area:rails}
+  .tile--tee{grid-area:tee}
+  .tile--denim{grid-area:denim}
+  .tile--jewelry{grid-area:jewelry}
+  .tile--store{grid-area:store}
+  .mosaic__say{grid-area:say}
 }
 /* Above 900 it becomes the real mosaic: the street shot runs two columns
    wide and two rows tall, and the remaining five fill in around it. The
@@ -317,15 +365,17 @@ body[data-lock="true"]{overflow:hidden}
     grid-template-areas:
       "feature feature rails"
       "feature feature tee"
+      "say     say     say"
       "denim   jewelry store";
   }
+  .mosaic__say{grid-area:say}
   .tile--feature{grid-area:feature;aspect-ratio:auto}
   .tile--rails{grid-area:rails}
   .tile--tee{grid-area:tee}
   .tile--denim{grid-area:denim}
   .tile--jewelry{grid-area:jewelry}
   .tile--store{grid-area:store}
-  .tile--feature figcaption{font-size:clamp(17px,1.5vw,22px)}
+  .tile--feature figcaption{font-size:clamp(19px,1.8vw,26px)}
 }
 
 .shop__foot{margin-top:clamp(40px,4.6vw,62px);text-align:center}
@@ -916,9 +966,9 @@ section[id]{scroll-margin-top:24px}
         <p class="sec-sub">A look around before you come in.</p>
       </div>
 
-      <!-- PLACEHOLDER CAPTIONS: the six <figcaption> lines are mine, not Erica's.
-           Get her voice on them before launch. The photographs themselves are
-           client-supplied and real - see README section D. -->
+      <!-- PLACEHOLDER CAPTIONS: the two <figcaption> lines are mine, not
+           Erica's. Get her voice on them before launch. The photographs
+           themselves are client-supplied and real - see README section D. -->
       <div class="mosaic stagger">
         <figure class="tile tile--feature" data-rv>
           <img src="img/shop/street-style-1100.webp"
@@ -934,7 +984,6 @@ section[id]{scroll-margin-top:24px}
                sizes="(max-width:600px) 46vw, (max-width:900px) 46vw, 31vw"
                width="1040" height="1300" loading="lazy" decoding="async"
                alt="Brass clothing rails inside the boutique, hung with denim jackets, trench coats, knits and lace tops, with handbags on the white shelf above.">
-          <figcaption>The gold rails.</figcaption>
         </figure>
         <figure class="tile tile--tee" data-rv>
           <img src="img/shop/graphic-tee-620.webp"
@@ -942,15 +991,19 @@ section[id]{scroll-margin-top:24px}
                sizes="(max-width:600px) 46vw, (max-width:900px) 46vw, 31vw"
                width="881" height="1101" loading="lazy" decoding="async"
                alt="A woman in the shop wearing a cream graphic tee and light-wash jeans, standing in front of the flower wall.">
-          <figcaption>Graphic tees and good jeans.</figcaption>
         </figure>
+        <!-- PLACEHOLDER COPY: the headline is mine. "Main Street, Islip" is
+             sourced (business listing + geocode); the invitation is not. -->
+        <div class="mosaic__say" data-rv>
+          <p>Come in, try things on,<br><em>stay a while.</em></p>
+          <a href="#visit">Main Street, Islip</a>
+        </div>
         <figure class="tile tile--denim" data-rv>
           <img src="img/shop/denim-table-620.webp"
                srcset="img/shop/denim-table-420.webp 420w, img/shop/denim-table-620.webp 620w, img/shop/denim-table-1040.webp 1040w"
                sizes="(max-width:600px) 46vw, (max-width:900px) 46vw, 31vw"
                width="1040" height="1300" loading="lazy" decoding="async"
                alt="A display table stacked with folded jeans in cream and blue washes, in front of rails of striped shirts and floral dresses.">
-          <figcaption>Denim, folded and waiting.</figcaption>
         </figure>
         <figure class="tile tile--jewelry" data-rv>
           <img src="img/shop/jewelry-620.webp"
@@ -958,7 +1011,6 @@ section[id]{scroll-margin-top:24px}
                sizes="(max-width:600px) 46vw, (max-width:900px) 46vw, 31vw"
                width="1040" height="1300" loading="lazy" decoding="async"
                alt="A gold carousel stand hung with beaded necklaces in many colours, beside a tiered stand of chunky stone and resin bracelets.">
-          <figcaption>The jewelry counter.</figcaption>
         </figure>
         <figure class="tile tile--store" data-rv>
           <img src="img/shop/storefront-620.webp"

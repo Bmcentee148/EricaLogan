@@ -140,11 +140,16 @@ PRODUCTION CHECKLIST
                             favorites..." - generic, and now slightly at odds
                             with the headline's stronger voice
   [ ] In the Shop sub      "A look around before you come in."
-  [ ] In the Shop captions The six one-liners over the photos ("The gold
-                            rails.", "Denim, folded and waiting.", "Bag in
-                            hand, back out onto the street." and so on) are
-                            mine. They are the most voice-y copy on the page
-                            and the easiest for her to rewrite - ask.
+  [ ] In the Shop captions Down to two - "Out the door in something new."
+                            on the street shot and "Bag in hand, back out
+                            onto the street." on the storefront shot. Both
+                            mine. There were six; four were cut because six
+                            identical captions read as a template.
+  [ ] In the Shop band     "Come in, try things on, stay a while." - the
+                            headline in the dark band. Mine, and the most
+                            voice-y line on the page after the hero, so it
+                            is the one most worth getting from her. The
+                            "Main Street, Islip" link under it is sourced.
   [ ] In the Shop note     "See what landed this week."
   [ ] What We Carry sub    "A little of everything, chosen one piece at a time."
   [ ] 6 category blurbs    e.g. "washes that wear in, not out"
@@ -183,10 +188,12 @@ PRODUCTION CHECKLIST
       THIS room may well exist too - worth asking.)
   [x] In the Shop photos - six, all supplied by the client, all real. Phone
       photographs rather than product photography: mixed aspect ratios (0.56
-      to 0.76), mixed light, no two framed alike. That is exactly why they
-      are laid out as a mosaic and not as a product grid - see WHY NEW
-      ARRIVALS BECAME IN THE SHOP below. Consent on the three with faces in
-      them is still open, in section A.
+      to 0.76), mixed light, no two framed alike. That is why they are laid
+      out as a mosaic and not a product grid - see WHY NEW ARRIVALS BECAME
+      IN THE SHOP below - and why they carry a shared grade. An earlier
+      draft of this README claimed the mixed light "is the texture, not a
+      defect"; that was making a virtue of a constraint. It needed grading.
+      Consent on the three with faces in them is still open, in section A.
   [ ] LOW-RESOLUTION SOURCE on the graphic-tee photo: 881x1408, the smallest
       of the six. Fine at the tile sizes it is served at, but it cannot be
       promoted to the feature slot. If they have the camera original, take it.
@@ -256,15 +263,55 @@ WHY NEW ARRIVALS BECAME IN THE SHOP
 THE IN THE SHOP MOSAIC
   Six tiles, every one a 4:5 portrait box:
 
-      >900px   street shot 2 cols x 2 rows, rails and tee stacked beside it,
-               denim / jewelry / storefront across the bottom
-      601-900  a plain 2 x 3 grid
-      <=600    2 columns, but the street shot and the storefront shot span
-               both, so it reads big / pair / pair / big rather than a flat
-               grid or a 3,000px single-column scroll
+      >900px   street shot 2 cols x 2 rows, rails and tee stacked beside
+               it, the copy band full width, then denim / jewelry /
+               storefront across the bottom
+      601-900  2 columns, placed EXPLICITLY (grid-template-areas) rather
+               than auto-flowed - the band needs both columns and
+               auto-placement leaves a hole in the row above it
+      <=600    2 columns, with the street shot, the band and the storefront
+               shot spanning both, so it reads big / pair / band / pair /
+               big rather than a flat grid or a 3,000px single-column scroll
 
   The feature tile drops its aspect-ratio above 900px and takes its height
   from the two rows it spans, which land at very nearly 4:5 on their own.
+
+THE DARK BAND IN THE MOSAIC (.mosaic__say)
+  The first pass at this section was six photographs in six identical boxes
+  with six identical captions, and it read as a camera roll rather than a
+  designed section - flat, no hierarchy beyond one box being bigger, and no
+  typographic voice at all when every other section on the page mixes type
+  and image. Three things fixed it, and all three matter together:
+
+    1. The band. --ink-deep with the headline in Playfair and the second
+       half in --gold-lt italic - the same roman-then-gold-italic pattern as
+       the hero headline. Below the hero this is the only place the brand
+       gold appears at any size. Contrast measured: gold-lt on ink-deep is
+       7.5:1, cream on ink-deep about 17:1, both fine for the small caps.
+    2. Captions cut from six to two, and the survivors made bigger. They sit
+       at opposite corners of the desktop mosaic (top-left feature,
+       bottom-right storefront), which is what balances it.
+    3. The shared grade on the photographs - see below.
+
+  The band is not decoration: it links to #visit, so the section now points
+  somewhere. If the copy changes, keep the <br> - the line is broken by hand
+  at the comma so the italic phrase is never split across lines.
+
+THE SHARED GRADE ON THE PHOTOGRAPHS
+  Six phone photos taken at different times of day in different light. Left
+  alone in identical boxes they read as a camera roll. gen-time grade, baked
+  into the .webp files (there is no CSS filter to undo):
+
+    - each photo's mean luminance pulled 45% of the way toward 152, so they
+      sit in a common register without being flattened into each other
+    - black point lifted to 9/255 - the matte, printed look, and it buries
+      the noise in the two dim interior shots
+    - a small warm bias (R x1.020, B x0.982) toward the --paper ground
+    - saturation to 94%, which mostly calms the jewellery shot
+
+  The numbers are constants at the top of the generator. If a photo is
+  swapped, re-run the same grade over it or it will not match the other
+  five - this is the step that makes them a set.
 
   SWAPPING A PHOTO. Three files at the same slug:
       <slug>-420.webp   <slug>-620.webp   <slug>-1040.webp
@@ -281,7 +328,7 @@ THE IN THE SHOP MOSAIC
   resolution: it is the only source above 1200px wide and the only one that
   can fill a 2,100px tile.
 
-  Section weight is about 442KB at 1x desktop, against 279KB for the six
+  Section weight is about 452KB at 1x desktop, against 279KB for the six
   product cards it replaced. Encoded at webp q72 - these are detailed
   photographs (beads, denim texture, a whole streetscape), so they cost more
   per tile than a garment on a plain wall did. Everything is loading="lazy"
