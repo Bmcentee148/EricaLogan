@@ -16,10 +16,28 @@ DEPLOY
 
 FILE STRUCTURE
   index.html                      the entire site, one file
+  404.html                        not-found page, standalone (its own <style>
+                                  block, its own copy of the ribbon + header,
+                                  logo only and no nav - see THE LIGHT HEADER).
+                                  Every href/src on it is ROOT-ABSOLUTE, because
+                                  Netlify serves it from whatever URL was hit.
   favicon.ico                     EL monogram, 16/32/48
+  robots.txt                      allows everything, points at the sitemap
+  sitemap.xml                     the one URL; lastmod is hand-maintained
+  _headers                        Netlify response headers - security headers on
+                                  everything, 7-day cache on /img/*. Cloudflare
+                                  Pages reads it too; Vercel and Apache do not.
+  _redirects                      forces /README.txt and /CLAUDE.md to 404. This
+                                  repo deploys every tracked file, and README is
+                                  publicly readable otherwise - where it says in
+                                  plain text that copy on the page is placeholder.
   README.txt                      this file
   img/
-    logo.webp / logo-500.webp     white wordmark, transparent background
+    logo.webp / logo-500.webp     white wordmark, transparent background.
+                                  Footer only, now that the header is light.
+    logo-ink.webp /               the same wordmark recoloured to --ink-deep
+      logo-ink-500.webp           (#1E1B18) for the light header and the
+                                  mobile nav panel. See "THE LIGHT HEADER".
     hero-desktop.webp             1536x1024 landscape hero, used above 520px
     hero-mobile.webp              768x1024 portrait hero, used at 520px and below
                                   (3:4 crop of the same photo, source x500-1268,
@@ -266,8 +284,11 @@ PRODUCTION CHECKLIST
 
 --- E. NOT BUILT YET ----------------------------------------------------------
 
-  [ ] 404 page.
-  [ ] robots.txt and sitemap.xml.
+  [x] 404 page. DONE - 404.html. Netlify serves it with a real 404 status;
+      it also carries meta robots noindex as belt-and-braces for other hosts.
+  [x] robots.txt and sitemap.xml. DONE, both referencing the real domain.
+      sitemap.xml lastmod is hand-maintained - bump it when the page changes
+      materially, it is not generated.
   [ ] Analytics. Nothing is installed.
 
 
@@ -285,7 +306,17 @@ PRODUCTION CHECKLIST
       get the wide landscape photo under the scrim meant for the portrait
       crop, so the headline sits on the brightest part of the wallpaper.
       768px is the worst case. Pre-dates this photo, but the old hero was
-      dark on the left so it never showed. Align the two numbers.
+      dark on the left so it never showed.
+
+      MEASURED, and it is a consistency-of-look issue, not a contrast one.
+      Landscape photo at 600/768/820/900px wide, gold italic min / p5:
+
+          under the mobile scrim (what ships)   2.5-2.8 / 3.6-3.8
+          under the desktop scrim (the "fix")   2.2-2.7 / 3.7-4.0
+
+      Aligning the numbers would make that band DARKER and very slightly
+      worse, so it was deliberately not done when the mobile scrim was
+      pulled back to 70%. Still worth tidying, but it is cosmetic.
 
 
 ===============================================================================
@@ -407,16 +438,99 @@ THE MAP IS CLICK-TO-LOAD - LEAVE IT THAT WAY
 THE HERO IS LIGHT TYPE ON A DARK SCRIM
   Headline white, italic in --gold-lt (#CFA470, the dark-background gold),
   over a dark left-to-right scrim. The photo is a mid-tone interior (mean
-  luminance ~144), so it needs a fairly strong scrim to carry white type -
-  the scrim runs .74 at the left edge falling to 0 by 96%. That is 80% of
-  the strength white type would normally want - deliberately pulled back so
-  the shop still reads bright, which is what the client asked for. Measured
-  contrast sits at 7.9:1 or better everywhere, well clear of AA. Below about
-  60% strength the mobile headline starts failing, so that is the floor.
+  luminance ~144), so it needs a fairly strong scrim to carry white type.
+  Desktop runs .744 at the left edge falling to 0 by 96% - 80% of the
+  strength white type would normally want, deliberately pulled back so the
+  shop still reads bright, which is what the client asked for. Measured
+  contrast sits at 7.9:1 or better everywhere, well clear of AA.
+
+  MOBILE IS PULLED BACK FURTHER - 70%, NOT 80%. The client came back saying
+  the phone hero still felt dark, so the mobile block (max-width:900px) now
+  runs .651 at the left edge, and the top/bottom vignettes came back with
+  it (.32/.05/.40 -> .20/.03/.28). Previous values, if this ever needs
+  reverting: .744 / .704 / .576 / .368 / .144 across the same five stops.
+
+  Measured against hero-mobile.webp at 360/390/430px wide, under the actual
+  glyph coverage rather than a bounding box:
+
+                            80% (was)      70% (now)     needs
+      h1 roman, white       5.6 min        4.8 min       3:1  (large)
+      h1 italic, gold-lt    5.1 p5         4.3 p5        3:1  (large)
+      lede, white-90        6.4 min        5.3 min       4.5:1
+      ghost button, white   8.8 min        7.3 min       4.5:1
+      hero__loc, white     15.7 min       14.6 min       4.5:1
+
+  Mean composited luminance of the phone hero goes 46 -> 55, and the racks
+  on the right (which is what she is actually looking at) 57 -> 64.
+
+  60% strength is the floor and the numbers say why: at .558 the lede drops
+  to 4.47:1, just under AA for body text. Do not go past 70% without
+  re-measuring. Shaping the curve rather than scaling it - holding the left
+  edge and opening the right - was tried and is worse, because the third
+  headline line runs to about 70% of the viewport width, so the 52% and 74%
+  stops are still behind type.
+
+  Desktop was left alone. It has known sub-3:1 hot spots already (see THE
+  HERO PHOTO below) and lightening it would widen them.
+
   If a much brighter photo is ever swapped in, this has to flip to ink type
   on a LIGHT veil, with the italic in --gold-ink (#7A5E30). Both golds exist
   in the token list for exactly that reason: --gold-lt for dark backgrounds,
   --gold-ink for light ones.
+
+THE LIGHT HEADER
+  The announcement ribbon, the header and the full-screen mobile nav panel
+  were all ink-on-white until the client asked for the inversion. They now
+  run on existing tokens, no new ones:
+
+      .announce   --paper  (#F0EDEA) ground, --ink-soft text, --gold-ink icons
+      .site-header --cream (#FDFBF7) ground, --ink-deep nav, --gold-ink rules
+      .mnav       --cream ground, --ink-deep type, --ink-soft footer
+
+  The ribbon sits one tonal step below the header on purpose - flat white
+  across both reads as one undifferentiated block. --ink-bar (#171718) was
+  the old ribbon colour and has been deleted from the token list; the old
+  header ground was --ink, which the body and footer still use.
+
+  Three things that are easy to miss if this is ever re-themed:
+
+    1. THE WORDMARK IS A WHITE ALPHA MASK. img/logo.webp is pure #FFFFFF
+       with an alpha channel - on a light header it is invisible. That is
+       what logo-ink.webp / logo-ink-500.webp are for. To regenerate them,
+       keep the alpha channel and flatten RGB to the ink colour:
+
+           im = Image.open('img/logo.webp').convert('RGBA')
+           a = np.asarray(im)[..., 3]
+           out = np.dstack([np.full_like(a,0x1E), np.full_like(a,0x1B),
+                            np.full_like(a,0x18), a])
+           Image.fromarray(out,'RGBA').save('img/logo-ink.webp',
+                           'WEBP', lossless=True, method=6, exact=True)
+
+       Lossless, not lossy: it is a two-colour fine script and lossy WebP
+       rings on it, the same reason the share card is rendered at 2x. The
+       ink files come out the same 28,098 / 12,998 bytes as the white ones.
+       THE FOOTER STILL USES THE WHITE PAIR - it is still on --ink.
+
+    2. --gold-lt IS THE WRONG GOLD ON THESE THREE REGIONS. It measures
+       2.2:1 on --cream, under the 3:1 WCAG 2.2 focus-appearance minimum,
+       so the global focus ring is overridden to --gold-ink (5.9:1) for
+       .announce, .site-header and .mnav. Everything below the header is
+       still on a dark ground and still takes --gold-lt.
+
+    3. theme-color. <meta name="theme-color"> follows whatever is at the
+       very top of the page and is now #F0EDEA, matching the ribbon.
+
+  Measured in the browser, every text and icon colour in the three regions
+  passes: ribbon 4.9:1, nav 16.6:1, mnav footer 5.6:1, gold icons 5.2-5.9:1.
+  The Get Directions outline is rgba(30,27,24,.50) = 3.3:1 against the
+  header, over the 3:1 minimum for a control boundary.
+
+  404.html CARRIES ITS OWN COPY of the ribbon and header (its own <style>
+  block, logo only, no nav) and was inverted to match. It needed four
+  tokens index.html already had - --paper, --ink-deep, --ink-soft and
+  --gold-ink - so the two token lists have drifted less, not more. Its
+  wordmark srcset is root-absolute like everything else on that page.
+  Anything done to the header on index.html has to be done there too.
 
 SHARE CARD - HOW TO REBUILD IT
   img/share-card.jpg is not a plain crop of the hero, it is a composed
@@ -457,7 +571,11 @@ WHY IMAGES ARE IN A FOLDER, NOT BASE64
   returning visitor to re-download the whole page.
 
 PAGE WEIGHT (own assets, whole page scrolled)
-  phone ~470KB / desktop 1x ~575KB / desktop 2x ~840KB
+  phone ~483KB / desktop 1x ~588KB / desktop 2x ~840KB
+  The light header added ~13KB at 1x: the header and the footer used to
+  share one cached copy of logo-500.webp, and now pull the ink and the
+  white wordmark separately. At 2x it is a wash - the header was already
+  pulling the 900px file and the footer the 500px one.
   Plus ~67KB of Google Fonts. The map adds ~1.8MB only if clicked.
   The real hero costs ~65KB more than the AI one it replaced (desktop
   147KB -> 212KB, mobile 89KB -> 104KB) - the floral wallpaper is
@@ -506,6 +624,10 @@ THE HERO PHOTO
       the text also pulls the sign into it. LEFT AS IS on purpose - it is
       their real wall sign, and the alternatives (darker scrim, or
       retouching the sign out of hero-mobile.webp) were both declined.
+      NOTE: pulling the mobile scrim back to 70% made this smudge more
+      legible, not less - it is the one thing that got worse in that
+      change. If it now bothers her, retouching the sign out of
+      hero-mobile.webp is the fix, not re-darkening the scrim.
     - The pendant lights are sliced through by the top edge at wide
       viewports, because the photo is 3:2 and the hero box is much wider
       than that. Only fixable by cropping or a taller source frame.
