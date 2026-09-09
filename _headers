@@ -30,7 +30,7 @@
 # --- Images: cached for 7 days -------------------------------
 # NOT "max-age=31536000, immutable", which is the usual advice.
 # That is only safe when filenames carry a content hash. These
-# do not - they are plain names like cable-knit-sweater-520.webp
+# do not - they are plain names like gold-rails-620.webp
 # - so if a product photo is replaced under the same filename, a
 # year-long immutable cache would leave returning visitors seeing
 # the old image with no way to force a refresh. Seven days caps

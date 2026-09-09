@@ -16,7 +16,21 @@ DEPLOY
 
 FILE STRUCTURE
   index.html                      the entire site, one file
+  404.html                        not-found page, standalone (its own <style>
+                                  block, its own copy of the ribbon + header,
+                                  logo only and no nav - see THE LIGHT HEADER).
+                                  Every href/src on it is ROOT-ABSOLUTE, because
+                                  Netlify serves it from whatever URL was hit.
   favicon.ico                     EL monogram, 16/32/48
+  robots.txt                      allows everything, points at the sitemap
+  sitemap.xml                     the one URL; lastmod is hand-maintained
+  _headers                        Netlify response headers - security headers on
+                                  everything, 7-day cache on /img/*. Cloudflare
+                                  Pages reads it too; Vercel and Apache do not.
+  _redirects                      forces /README.txt and /CLAUDE.md to 404. This
+                                  repo deploys every tracked file, and README is
+                                  publicly readable otherwise - where it says in
+                                  plain text that copy on the page is placeholder.
   README.txt                      this file
   img/
     logo.webp / logo-500.webp     white wordmark, transparent background.
@@ -270,8 +284,11 @@ PRODUCTION CHECKLIST
 
 --- E. NOT BUILT YET ----------------------------------------------------------
 
-  [ ] 404 page.
-  [ ] robots.txt and sitemap.xml.
+  [x] 404 page. DONE - 404.html. Netlify serves it with a real 404 status;
+      it also carries meta robots noindex as belt-and-braces for other hosts.
+  [x] robots.txt and sitemap.xml. DONE, both referencing the real domain.
+      sitemap.xml lastmod is hand-maintained - bump it when the page changes
+      materially, it is not generated.
   [ ] Analytics. Nothing is installed.
 
 
