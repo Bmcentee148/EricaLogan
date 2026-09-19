@@ -280,6 +280,29 @@ PRODUCTION CHECKLIST
   [ ] Ask whether their Google Business Profile is claimed and verified. For
       a walk-in shop that outranks anything on this site for local search.
 
+  [ ] IN THE SHOP FEATURE TILE IS TALLER THAN THE FOLD. A decision, not an
+      oversight - recorded so it reads that way at handoff. Measured, not
+      estimated. At 1440x900 the street-style tile renders 846x1057, about
+      134% of the usable viewport height, so it is never seen whole; at
+      1920x1080 it is 952x1190 and overflows even there, because the mosaic
+      keeps growing to its 1600px max-width while the ratio stays fixed.
+      Cause: every source in img/shop is 4:5 portrait, and above 900px the
+      feature spans two columns and two rows, which reproduces 4:5 at
+      double the width - the comment above the @media min-width:901px block
+      says as much.
+      LEFT AS-IS because tall editorial imagery suits the shop, the caption
+      is still reached on the next scroll, and the client has not seen the
+      photography in place yet. If they want a tighter page: in the
+      min-width:901px block set .mosaic grid-template-rows to
+        repeat(2, minmax(0, min(38vh,430px))) auto minmax(0, min(38vh,430px))
+      and .tile aspect-ratio:auto. Section goes 2468px -> 1946px, page
+      7935px -> 7413px. It costs a re-crop - cover crops from centre, so
+      the rails shot loses the shelf of bags along its top edge and the
+      feature becomes a half-figure; object-position per tile fixes both.
+      Capping only .tile--feature does NOT work: its height comes from the
+      two rows it spans, so a max-height leaves a 349px hole beneath it and
+      saves 5px of page height.
+
   [ ] SCRIM/IMAGE BREAKPOINT MISMATCH. The portrait hero swaps in at 520px
       (the <source> media query) but the lighter mobile scrim starts at
       900px (the @media max-width:900px block). Between 521 and 900px you
