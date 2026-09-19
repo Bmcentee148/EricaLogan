@@ -84,8 +84,9 @@ PRODUCTION CHECKLIST
 
   [ ] LOGO LINK. The header logo is still  href="#" . Point it at "/".
 
-  [ ] FOOTER CREDIT. The bottom bar carries "Site by Benchwork Digital".
-      Agree it with the client or delete the line - it is commented in
+  [ ] FOOTER CREDIT. The bottom bar carries "Built by Benchwork Digital",
+      with the studio name linking to https://benchworkdigital.com in a new
+      tab. Agree it with the client or delete the line - it is commented in
       index.html so it is easy to find.
 
   [ ] GET DIRECTIONS. Currently a Google Maps *search* URL built from the
