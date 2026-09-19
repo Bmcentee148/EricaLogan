@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Page Not Found | Erica Logan Clothing Boutique</title>
 <meta name="description" content="That page could not be found. Erica Logan Clothing Boutique is on Main Street in Islip, New York.">
-<meta name="theme-color" content="#080908">
+<meta name="theme-color" content="#F0EDEA">
 
 <!-- 404s must never be indexed. Netlify already returns a 404 status with this
      file, which is the real signal; this is belt-and-braces for other hosts. -->
@@ -25,10 +25,13 @@
 /* ============ TOKENS (mirrors index.html) ============ */
 :root{
   --ink:#080908;
-  --ink-bar:#171718;
   --gold:#C0985B;
   --gold-lt:#CFA470;
+  --gold-ink:#7A5E30;     /* the gold that passes on a light ground */
   --cream:#FDFBF7;
+  --paper:#F0EDEA;
+  --ink-deep:#1E1B18;
+  --ink-soft:#6B6560;
 
   --display:"Playfair Display",Georgia,"Times New Roman",serif;
   --body:"Mulish",-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif;
@@ -70,9 +73,12 @@ svg{display:block;flex:none}
   outline:2px solid var(--gold-lt);
   outline-offset:3px;
 }
+/* --gold-lt is only 2.2:1 on the light chrome - see index.html. */
+.announce :focus-visible,
+.site-header :focus-visible{outline-color:var(--gold-ink)}
 
 /* ============ ANNOUNCEMENT BAR ============ */
-.announce{background:var(--ink-bar);border-bottom:1px solid rgba(255,255,255,.05)}
+.announce{background:var(--paper);border-bottom:1px solid rgba(30,27,24,.07)}
 .announce__in{
   height:var(--bar-h);
   padding-inline:var(--edge);
@@ -84,19 +90,20 @@ svg{display:block;flex:none}
   font-weight:600;
   letter-spacing:.09em;
   text-transform:uppercase;
-  color:#E9E5DF;
+  color:var(--ink-soft);
 }
 .announce__loc,.announce__ig{display:flex;align-items:center;gap:8px;white-space:nowrap}
 .announce__ig{justify-self:end;transition:color .2s ease}
-.announce__ig:hover{color:#fff}
-.announce__loc svg,.announce__ig svg{color:var(--gold-lt)}
+.announce__ig:hover{color:var(--ink-deep)}
+.announce__loc svg,.announce__ig svg{color:var(--gold-ink)}
 .announce__mid{justify-self:center;white-space:nowrap}
 
 /* ============ HEADER ============ */
 /* Simplified vs index.html: logo only. The full header carries a JS burger
    menu, and a dead burger on a 404 is worse than no burger — the recovery
-   links in the body do the navigating instead. */
-.site-header{background:var(--ink)}
+   links in the body do the navigating instead. Light ground and the ink
+   wordmark, to match index.html; the 404 body below stays on --ink. */
+.site-header{background:var(--cream)}
 .hdr{padding:var(--hdr-pad) var(--edge);display:flex;justify-content:center}
 .logo img{width:clamp(180px,26vw,300px)}
 
@@ -210,7 +217,7 @@ svg{display:block;flex:none}
 <header class="site-header">
   <div class="hdr">
     <a class="logo" href="/" aria-label="Erica Logan Clothing Boutique — home">
-      <img src="/img/logo.webp" srcset="/img/logo-500.webp 500w, /img/logo.webp 900w" sizes="(max-width:900px) 196px, 300px" width="900" height="309" alt="Erica Logan Clothing Boutique">
+      <img src="/img/logo-ink.webp" srcset="/img/logo-ink-500.webp 500w, /img/logo-ink.webp 900w" sizes="(max-width:900px) 196px, 300px" width="900" height="309" alt="Erica Logan Clothing Boutique">
     </a>
   </div>
 </header>

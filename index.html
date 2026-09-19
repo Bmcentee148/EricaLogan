@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Erica Logan Clothing Boutique | Women's Fashion in Islip, New York</title>
 <meta name="description" content="Curated pieces, timeless trends, and everyday favorites at Erica Logan Clothing Boutique in Islip, New York. New arrivals dropping weekly.">
-<meta name="theme-color" content="#080908">
+<meta name="theme-color" content="#F0EDEA">
 
 <link rel="canonical" href="https://ericaloganclths.com/">
 <meta property="og:url" content="https://ericaloganclths.com/">
@@ -33,8 +33,7 @@
 <style>
 /* ============ TOKENS ============ */
 :root{
-  --ink:#080908;          /* header black */
-  --ink-bar:#171718;      /* announcement bar */
+  --ink:#080908;          /* page ground + footer */
   --gold:#C0985B;         /* button fill */
   --gold-lt:#CFA470;      /* icon + rule accent */
   --cream:#FDFBF7;
@@ -82,9 +81,15 @@ svg{display:block;flex:none}
   outline:2px solid var(--gold-lt);
   outline-offset:3px;
 }
+/* --gold-lt is the dark-background gold: on the light header it only
+   reaches 2.2:1, under the 3:1 WCAG focus-appearance minimum. The three
+   light chrome regions take --gold-ink (5.9:1) instead. */
+.announce :focus-visible,
+.site-header :focus-visible,
+.mnav :focus-visible{outline-color:var(--gold-ink)}
 
 /* ============ ANNOUNCEMENT BAR ============ */
-.announce{background:var(--ink-bar);border-bottom:1px solid rgba(255,255,255,.05)}
+.announce{background:var(--paper);border-bottom:1px solid rgba(30,27,24,.07)}
 .announce__in{
   height:var(--bar-h);
   padding-inline:var(--edge);
@@ -96,17 +101,17 @@ svg{display:block;flex:none}
   font-weight:600;
   letter-spacing:.09em;
   text-transform:uppercase;
-  color:#E9E5DF;
+  color:var(--ink-soft);
 }
 .announce__loc,.announce__ig{display:flex;align-items:center;gap:8px;white-space:nowrap}
 .announce__ig{justify-self:end}
-.announce__loc svg,.announce__ig svg{color:var(--gold-lt)}
+.announce__loc svg,.announce__ig svg{color:var(--gold-ink)}
 .announce__mid{justify-self:center;white-space:nowrap}
 .announce__ig{transition:color .2s ease}
-.announce__ig:hover{color:#fff}
+.announce__ig:hover{color:var(--ink-deep)}
 
 /* ============ HEADER ============ */
-.site-header{background:var(--ink);position:relative;z-index:30}
+.site-header{background:var(--cream);position:relative;z-index:30}
 .hdr{
   padding:var(--hdr-pad) var(--edge);
   display:grid;
@@ -121,18 +126,18 @@ svg{display:block;flex:none}
   display:flex;align-items:center;
   font-size:13px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;
   white-space:nowrap;
-  color:#F4F1EC;
+  color:var(--ink-deep);
   padding-block:6px;
   position:relative;
   transition:color .2s ease;
 }
 .nav a::after{
   content:"";position:absolute;left:0;right:0;bottom:0;height:1px;
-  background:var(--gold-lt);
+  background:var(--gold-ink);
   transform:scaleX(0);transform-origin:left;
   transition:transform .28s ease;
 }
-.nav a:hover{color:var(--gold-lt)}
+.nav a:hover{color:var(--gold-ink)}
 .nav a:hover::after{transform:scaleX(1)}
 
 /* --- logo --- */
@@ -144,16 +149,16 @@ svg{display:block;flex:none}
 .hdr-cta{
   display:inline-flex;align-items:center;gap:10px;
   min-height:44px;padding:0 22px;
-  border:1px solid rgba(255,255,255,.55);
+  border:1px solid rgba(30,27,24,.50);
   font-size:12px;font-weight:700;letter-spacing:.11em;text-transform:uppercase;
-  color:#F4F1EC;
+  color:var(--ink-deep);
   transition:background-color .22s ease,color .22s ease,border-color .22s ease;
 }
-.hdr-cta:hover{background:#fff;color:#131110;border-color:#fff}
+.hdr-cta:hover{background:var(--ink-deep);color:var(--cream);border-color:var(--ink-deep)}
 .hdr-cta--icon{display:none}
 
 /* --- mobile-only header controls --- */
-.burger{display:none;color:#F4F1EC;padding:4px}
+.burger{display:none;color:var(--ink-deep);padding:4px}
 
 /* ============ HERO ============ */
 .hero{
@@ -237,7 +242,7 @@ svg{display:block;flex:none}
 /* ============ MOBILE NAV PANEL ============ */
 .mnav{
   position:fixed;inset:0;z-index:60;
-  background:var(--ink);
+  background:var(--cream);color:var(--ink-deep);
   padding:26px var(--edge) 40px;
   display:flex;flex-direction:column;
   opacity:0;visibility:hidden;transform:translateY(-10px);
@@ -248,7 +253,7 @@ svg{display:block;flex:none}
 .mnav__top{display:flex;align-items:center;justify-content:space-between;margin-bottom:36px}
 .mnav__top img{width:170px}
 .mnav ul{list-style:none;margin:0;padding:0;display:block}
-.mnav > ul > li + li{border-top:1px solid rgba(255,255,255,.09)}
+.mnav > ul > li + li{border-top:1px solid rgba(30,27,24,.12)}
 .mnav > ul > li > a{
   display:block;padding:19px 0;
   font-family:var(--display);font-size:26px;letter-spacing:.04em;text-transform:uppercase;
@@ -256,10 +261,10 @@ svg{display:block;flex:none}
 .mnav__foot{
   margin-top:auto;padding-top:34px;
   display:flex;flex-direction:column;gap:14px;
-  font-size:12px;font-weight:600;letter-spacing:.09em;text-transform:uppercase;color:#BFBBB5;
+  font-size:12px;font-weight:600;letter-spacing:.09em;text-transform:uppercase;color:var(--ink-soft);
 }
 .mnav__foot span,.mnav__foot a{display:flex;align-items:center;gap:9px}
-.mnav__foot svg{color:var(--gold-lt)}
+.mnav__foot svg{color:var(--gold-ink)}
 body[data-lock="true"]{overflow:hidden}
 
 
@@ -740,7 +745,7 @@ body[data-lock="true"]{overflow:hidden}
   .hdr-cta{border:0;padding:10px;min-height:44px;min-width:44px;justify-content:center;gap:0}
   .hdr-cta span{display:none}
   .hdr-cta--icon{display:block}
-  .hdr-cta:hover{background:none;color:var(--gold-lt)}
+  .hdr-cta:hover{background:none;color:var(--gold-ink)}
   .announce__ig{display:none}
   .announce__in{grid-template-columns:auto 1fr;gap:14px;font-size:10.5px;letter-spacing:.08em}
   .announce__mid{justify-self:end}
@@ -748,15 +753,22 @@ body[data-lock="true"]{overflow:hidden}
   .logo img{width:min(196px,50vw)}
 
   .hero{min-height:clamp(500px,66svh,640px)}
+  /* Pulled back at the client's request - the phone hero read too dark.
+     The horizontal scrim moves from 80% to 70% of full strength (left edge
+     .744 -> .651) and the top/bottom vignettes come back with it. Measured
+     against hero-mobile.webp at 360/390/430px: the gold italic headline
+     holds p5 4.3:1 and the lede 8.4:1, both clear of their WCAG minimums
+     (3:1 large / 4.5:1 body). 60% strength is the floor - the lede hits
+     4.47:1 there. See "THE HERO IS LIGHT TYPE ON A DARK SCRIM" in README. */
   .hero__scrim{
     background:
-      linear-gradient(180deg,rgba(8,7,6,0.32) 0%,rgba(8,7,6,0.05) 24%,rgba(8,7,6,0.05) 62%,rgba(8,7,6,0.40) 100%),
+      linear-gradient(180deg,rgba(8,7,6,0.20) 0%,rgba(8,7,6,0.03) 24%,rgba(8,7,6,0.03) 62%,rgba(8,7,6,0.28) 100%),
       linear-gradient(90deg,
-        rgba(8,7,6,0.744) 0%,
-        rgba(8,7,6,0.704) 28%,
-        rgba(8,7,6,0.576) 52%,
-        rgba(8,7,6,0.368) 74%,
-        rgba(8,7,6,0.144) 100%);
+        rgba(8,7,6,0.651) 0%,
+        rgba(8,7,6,0.616) 28%,
+        rgba(8,7,6,0.504) 52%,
+        rgba(8,7,6,0.322) 74%,
+        rgba(8,7,6,0.126) 100%);
   }
   .hero__in{padding:40px var(--gut)}
   .eyebrow{font-size:clamp(15px,4.3vw,19px);letter-spacing:.3em}
@@ -906,7 +918,7 @@ section[id]{scroll-margin-top:24px}
     </nav>
 
     <a class="logo" href="/" aria-label="Erica Logan Clothing Boutique — home">
-      <img src="img/logo.webp" srcset="img/logo-500.webp 500w, img/logo.webp 900w" sizes="(max-width:900px) 196px, 400px" width="900" height="309" alt="Erica Logan Clothing Boutique">
+      <img src="img/logo-ink.webp" srcset="img/logo-ink-500.webp 500w, img/logo-ink.webp 900w" sizes="(max-width:900px) 196px, 400px" width="900" height="309" alt="Erica Logan Clothing Boutique">
     </a>
 
     <div class="hdr-right">
@@ -921,7 +933,7 @@ section[id]{scroll-margin-top:24px}
 <!-- ===== MOBILE NAV ===== -->
 <div class="mnav" id="mobile-nav" data-open="false" aria-hidden="true">
   <div class="mnav__top">
-    <img src="img/logo.webp" srcset="img/logo-500.webp 500w, img/logo.webp 900w" sizes="(max-width:900px) 196px, 400px" width="900" height="309" alt="Erica Logan Clothing Boutique">
+    <img src="img/logo-ink.webp" srcset="img/logo-ink-500.webp 500w, img/logo-ink.webp 900w" sizes="(max-width:900px) 196px, 400px" width="900" height="309" alt="Erica Logan Clothing Boutique">
     <button id="mnav-close" aria-label="Close menu">
       <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M5 5l14 14M19 5 5 19"/></svg>
     </button>
