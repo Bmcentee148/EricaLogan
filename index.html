@@ -458,6 +458,26 @@ body[data-lock="true"]{overflow:hidden}
 .carry .sec-head h2{color:#fff}
 .carry .sec-sub{color:var(--gold-lt)}
 .carry .sec-rule{background:var(--gold-lt)}
+/* Client ask (email, see README sources): the size range is a selling point,
+   so it rides with the section head rather than hiding inside a category
+   card. Rules are drawn with pseudo-elements rather than typed as dashes so
+   they stay put when the text wraps. --gold-lt on this dark ground measures
+   8.5:1. */
+.carry__sizes{
+  display:flex;align-items:center;justify-content:center;
+  gap:clamp(10px,1.4vw,16px);margin:18px 0 0;
+  /* 12.5px/.16em is the desktop treatment; both step down because at 360px
+     anything larger wraps this label onto a second line, and a two-line
+     eyebrow with rules floating beside it reads badly. Measured at 360:
+     11.5/.14 is one line, 11.5/.16 and 12.5/.16 are both two. No horizontal
+     overflow at any of them - the page is clean at 360. */
+  font-size:clamp(11.5px,1vw,12.5px);font-weight:700;
+  letter-spacing:.14em;text-transform:uppercase;color:var(--gold-lt);
+}
+.carry__sizes::before,.carry__sizes::after{
+  content:"";height:1px;width:clamp(14px,3vw,38px);
+  background:var(--gold-lt);opacity:.55;flex:none;
+}
 
 .carry__grid{display:grid;grid-template-columns:repeat(3,1fr);gap:0 clamp(26px,3.4vw,64px)}
 /* odd one out: centre a lone final item rather than stranding it in column 1.
@@ -478,6 +498,33 @@ body[data-lock="true"]{overflow:hidden}
 .carry__item p{
   margin:9px auto 0;max-width:34ch;
   font-size:clamp(13.5px,.98vw,15px);line-height:1.55;
+  color:rgba(244,241,236,.6);
+}
+/* Client ask: gifts for babies and kids. Deliberately NOT a seventh category
+   card. The six icons are a matched watercolour set (README D) and there is
+   no seventh, and a lone card would strand itself - the grid centres it via
+   the :last-child:nth-child(3n+1) rule above, which reads as a gap rather
+   than an addition. A full-width band instead, reusing the roman-then-gold-
+   italic pattern from the In the Shop CTA, --gold-lt because this ground is
+   dark. Its top border continues the rule the grid items draw. */
+.carry__gifts{
+  border-top:1px solid rgba(244,241,236,.16);
+  border-bottom:1px solid rgba(244,241,236,.16);
+  padding:clamp(34px,4vw,52px) 0;text-align:center;
+}
+.carry__gifts h3{
+  margin:0;
+  font-family:var(--display);font-weight:400;
+  font-size:clamp(25px,2.6vw,36px);line-height:1.15;color:var(--cream);
+}
+.carry__gifts h3 em{font-style:italic;color:var(--gold-lt)}
+.carry__gifts-rule{
+  display:block;width:44px;height:1px;
+  background:var(--gold-lt);opacity:.6;margin:16px auto 0;
+}
+.carry__gifts p{
+  margin:16px auto 0;max-width:46ch;
+  font-size:clamp(14px,1.05vw,16px);line-height:1.6;
   color:rgba(244,241,236,.6);
 }
 .carry__note{
@@ -1067,6 +1114,7 @@ section[id]{scroll-margin-top:24px}
         <h2>What We Carry</h2>
         <span class="sec-rule" aria-hidden="true"></span>
         <p class="sec-sub">A little of everything, chosen one piece at a time.</p>
+        <p class="carry__sizes">Sizes XS &ndash; 3X, plus sizes welcome</p>
       </div>
 
       <div class="carry__grid stagger">
@@ -1100,6 +1148,12 @@ section[id]{scroll-margin-top:24px}
           <h3>Accessories</h3>
           <p>Jewelry, bags, and the small things that finish a look.</p>
         </div>
+      </div>
+
+      <div class="carry__gifts" data-rv>
+        <h3>Gifts for <em>babies &amp; kids</em></h3>
+        <span class="carry__gifts-rule" aria-hidden="true"></span>
+        <p>Baby showers, birthdays, or just because. There&rsquo;s something here for the little ones, too.</p>
       </div>
 
       <p class="carry__note">Not sure where to start? That's what we're here for.</p>
