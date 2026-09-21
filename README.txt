@@ -239,11 +239,14 @@ PRODUCTION CHECKLIST
                            "gifts for babies and kids" - that heading is
                            their words, this sentence under it is invented.
                            Sign off or delete.
-  [ ] Sizes line wording   "Sizes XS - 3X, plus sizes welcome". The RANGE is
-                           theirs, verbatim ("we have plus size xs - 3x").
-                           "plus sizes welcome" is a reading of that, not a
-                           quote - it says welcoming where they said
-                           carrying. Confirm the phrasing or cut the clause.
+  [~] Sizes line wording   "Sizes XS - 3X, something for everyone". The
+                           RANGE is theirs, verbatim. The second clause was
+                           "plus sizes welcome" and they asked for the plus
+                           wording to come out - which also settles the
+                           welcoming-vs-carrying problem that clause had.
+                           "something for everyone" is how their follow-up
+                           was relayed rather than a confirmed quote, so it
+                           is nearly there: check the exact words once.
   [ ] What We Carry close  "Not sure where to start? That's what we're here for."
   [ ] Visit Us sub         "Main Street, Islip. Mother and daughters owned."
                             (the mother/daughters half IS confirmed - it is
@@ -691,7 +694,10 @@ SOURCES FOR ANYTHING FACTUAL ON THE PAGE
   Islip street address               their own Facebook post, "454 MAIN
                                      ST ISLIP NY 11751 IS OFFICIALLY OPEN"
   Sizes XS-3X                        client message relayed 21 Sep 2026,
-                                     "we have plus size xs - 3x"
+                                     "we have plus size xs - 3x". The range
+                                     is from this; the word "plus" was
+                                     dropped from the page at their request
+                                     in a follow-up, same week.
   Gifts for babies and kids          client message relayed 21 Sep 2026,
                                      "we carry gifts for babies and kids"
   Owner names                        AI search summary only - UNVERIFIED
