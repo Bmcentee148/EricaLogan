@@ -527,6 +527,24 @@ body[data-lock="true"]{overflow:hidden}
   font-size:clamp(14px,1.05vw,16px);line-height:1.6;
   color:rgba(244,241,236,.6);
 }
+/* Desktop puts the heading and the line beside each other, split by a
+   vertical hairline, with the pair centred as a group - the stacked version
+   below is the phone layout. Same element does both jobs: .carry__gifts-rule
+   is a 44px horizontal rule under the heading on small screens and turns on
+   its side here. Proportions taken from the client mockup: the divider runs
+   about 68px against a 1440px content width, with ~48px of air either side. */
+@media (min-width:901px){
+  .carry__gifts{
+    display:flex;align-items:center;justify-content:center;
+    gap:clamp(32px,3.4vw,50px);text-align:left;
+  }
+  .carry__gifts h3{flex:none}
+  .carry__gifts-rule{
+    width:1px;height:clamp(52px,4.6vw,68px);
+    margin:0;flex:none;align-self:center;
+  }
+  .carry__gifts p{margin:0;max-width:38ch}
+}
 .carry__note{
   margin:clamp(38px,4vw,56px) 0 0;text-align:center;
   font-family:var(--display);font-style:italic;
