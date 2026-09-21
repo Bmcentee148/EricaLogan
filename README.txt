@@ -171,8 +171,9 @@ PRODUCTION CHECKLIST
       their own Facebook text says "all women's clothes, shoes + accessories",
       so shoes are confirmed and should probably go back in. Note: 7 items
       leaves one centred alone on desktop; 9 fills three clean rows of three.
-      UPDATE (client email, Sept 2026): they asked for gifts for babies and
-      kids, and for the XS-3X range, to be called out. Both are on the page.
+      UPDATE (client message, Sept 2026): they asked for gifts for babies
+      and kids, and for the XS-3X range, to be called out. Both are on the
+      page.
       The gifts ask was built as a full-width band UNDER the six, not as a
       seventh card - there is no seventh icon in the watercolour set (D) and
       a lone seventh card centres itself, which reads as a gap. If SHOES
@@ -689,8 +690,8 @@ SOURCES FOR ANYTHING FACTUAL ON THE PAGE
   In the Shop photographs            supplied directly by the owners
   Islip street address               their own Facebook post, "454 MAIN
                                      ST ISLIP NY 11751 IS OFFICIALLY OPEN"
-  Sizes XS-3X                        client email relayed 21 Sep 2026,
+  Sizes XS-3X                        client message relayed 21 Sep 2026,
                                      "we have plus size xs - 3x"
-  Gifts for babies and kids          client email relayed 21 Sep 2026,
+  Gifts for babies and kids          client message relayed 21 Sep 2026,
                                      "we carry gifts for babies and kids"
   Owner names                        AI search summary only - UNVERIFIED
